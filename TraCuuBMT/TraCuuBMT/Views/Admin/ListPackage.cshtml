@@ -1,0 +1,46 @@
+﻿@using TraCuuBMT.Models;
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<Package> listPackage = (List<Package>)ViewBag.ListPackage;
+    var index = 0;
+}
+
+<div>
+    <h3>Danh sách gói tài nguyên</h3>
+    <div class="contentAdmin">
+        <table class="table table-bordered tableAdmin table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên gói</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Package item in listPackage)
+                {
+                    index++;
+                    string checkString = item.status == 1 ? "checked" : "";
+
+                    <tr>
+                        <th scope="row">@index</th>
+                        <td style="text-align:left">@item.packageName</td>
+                        <td>@item.description</td>
+                        <td>@item.price</td>
+                        <td>
+                            <input type="checkbox" value="" @checkString>
+                        </td>
+                        <td>@item.createDate</td>
+                        <td>
+                            <a href="@Url.Action("EditPackage","Admin", new { id= item.ID})" class="btn btn-warning">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

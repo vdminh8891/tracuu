@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TraCuuBMTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BieuThue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="hsCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="unit" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bieuThue" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="thueSuat" Type="float" Nullable="false" />
+          <Property Name="link_file_vn" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="link_file_en" Type="nvarchar" MaxLength="200" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="tenBieuThue" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastEditDate" Type="datetime" />
+          <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="KetQuaPhanTichPhanLoai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastEditDate" Type="datetime" />
+          <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
+          <Property Name="hsCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mota_Dnkhaibao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="link_file_vn" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="link_file_en" Type="nvarchar" MaxLength="200" />
+          <Property Name="unit" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mota_KQPTPL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="So_Vanban" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ngay_Vanban" Type="datetime" Nullable="false" />
+          <Property Name="Ngay_Vanban_HH" Type="datetime" />
+          <Property Name="CoQuan_PhatHanh_PTPL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CoQuan_TiepNhan_YC_PTPL" Type="nvarchar" MaxLength="200" />
+          <Property Name="DonVi_XNK" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ToKhai_HQ" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Loai_Hinh" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Co_Quan_YC_PTPL" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Hieu_Luc_Vanban" Type="nvarchar" MaxLength="200" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="packageName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="startDate" Type="datetime" />
+          <Property Name="endDate" Type="datetime" />
+          <Property Name="creator" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastEditDate" Type="datetime" />
+          <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
+          <Property Name="amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="currentPrice" Type="float" Nullable="false" />
+          <Property Name="packageId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastEditDate" Type="datetime" />
+          <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TraCuuBMTModelStoreContainer">
+          <EntitySet Name="BieuThue" EntityType="Self.BieuThue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KetQuaPhanTichPhanLoai" EntityType="Self.KetQuaPhanTichPhanLoai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TraCuuBMTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TraCuuBMTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Packages" EntityType="TraCuuBMTModel.Package" />
+          <EntitySet Name="Transactions" EntityType="TraCuuBMTModel.Transaction" />
+          <EntitySet Name="BieuThues" EntityType="TraCuuBMTModel.BieuThue" />
+          <EntitySet Name="KetQuaPhanTichPhanLoais" EntityType="TraCuuBMTModel.KetQuaPhanTichPhanLoai" />
+        </EntityContainer>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="packageName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Precision="3" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastEditDate" Type="DateTime" Precision="3" />
+          <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="currentPrice" Type="Double" Nullable="false" />
+          <Property Name="packageId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="creator" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastEditDate" Type="DateTime" Precision="3" />
+          <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BieuThue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="hsCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bieuThue1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="thueSuat" Type="Double" Nullable="false" />
+          <Property Name="link_file_vn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="link_file_en" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tenBieuThue" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="creator" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastEditDate" Type="DateTime" Precision="3" />
+          <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="KetQuaPhanTichPhanLoai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="creator" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastEditDate" Type="DateTime" Precision="3" />
+          <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="hsCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mota_Dnkhaibao" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link_file_vn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="link_file_en" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mota_KQPTPL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="So_Vanban" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ngay_Vanban" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ngay_Vanban_HH" Type="DateTime" Precision="3" />
+          <Property Name="CoQuan_PhatHanh_PTPL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CoQuan_TiepNhan_YC_PTPL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DonVi_XNK" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ToKhai_HQ" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Loai_Hinh" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Co_Quan_YC_PTPL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Hieu_Luc_Vanban" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TraCuuBMTModelStoreContainer" CdmEntityContainer="TraCuuBMTEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Packages">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+                <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="packageName" ColumnName="packageName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+                <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="packageId" ColumnName="packageId" />
+                <ScalarProperty Name="currentPrice" ColumnName="currentPrice" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BieuThues">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.BieuThue">
+              <MappingFragment StoreEntitySet="BieuThue">
+                <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+                <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="tenBieuThue" ColumnName="tenBieuThue" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
+                <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
+                <ScalarProperty Name="thueSuat" ColumnName="thueSuat" />
+                <ScalarProperty Name="bieuThue1" ColumnName="bieuThue" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="hsCode" ColumnName="hsCode" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KetQuaPhanTichPhanLoais">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.KetQuaPhanTichPhanLoai">
+              <MappingFragment StoreEntitySet="KetQuaPhanTichPhanLoai">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Hieu_Luc_Vanban" ColumnName="Hieu_Luc_Vanban" />
+                <ScalarProperty Name="Co_Quan_YC_PTPL" ColumnName="Co_Quan_YC_PTPL" />
+                <ScalarProperty Name="Loai_Hinh" ColumnName="Loai_Hinh" />
+                <ScalarProperty Name="ToKhai_HQ" ColumnName="ToKhai_HQ" />
+                <ScalarProperty Name="DonVi_XNK" ColumnName="DonVi_XNK" />
+                <ScalarProperty Name="CoQuan_TiepNhan_YC_PTPL" ColumnName="CoQuan_TiepNhan_YC_PTPL" />
+                <ScalarProperty Name="CoQuan_PhatHanh_PTPL" ColumnName="CoQuan_PhatHanh_PTPL" />
+                <ScalarProperty Name="Ngay_Vanban_HH" ColumnName="Ngay_Vanban_HH" />
+                <ScalarProperty Name="Ngay_Vanban" ColumnName="Ngay_Vanban" />
+                <ScalarProperty Name="So_Vanban" ColumnName="So_Vanban" />
+                <ScalarProperty Name="Mota_KQPTPL" ColumnName="Mota_KQPTPL" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
+                <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
+                <ScalarProperty Name="Mota_Dnkhaibao" ColumnName="Mota_Dnkhaibao" />
+                <ScalarProperty Name="hsCode" ColumnName="hsCode" />
+                <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+                <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

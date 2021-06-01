@@ -1,0 +1,53 @@
+﻿@using TraCuuBMT.Models;
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<Transaction> listTransaction = (List<Transaction>)ViewBag.ListTransaction;
+    List<User> listUser = (List<User>)ViewBag.ListUser;
+    var ListTransactionStatus = TraCuuBMT.General.Util.ListTransactionStatus;
+    var index = 0;
+}
+
+<div>
+    <h3>Danh sách giao dịch</h3>
+    <div class="contentAdmin">
+        <table class="table table-bordered tableAdmin table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Người tạo</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Loại</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Transaction item in listTransaction)
+                {
+                    index++;
+                    string checkString = item.status == 1 ? "checked" : "";
+                    string type = item.type == 1 ? "First register" : item.type.ToString();
+                    //string className = item.type == 1 ? "disabledLink btn btn-warning" : "btn btn-warning";
+                    string className = "btn btn-warning";
+
+                    <tr>
+                        <th scope="row">@index</th>
+                        <td style="text-align:left">@listUser.Where(w => w.ID == item.userId).FirstOrDefault().email</td>
+                        <td>@item.currentPrice VND</td>
+                        <td>@item.creator</td>
+                        <td>
+                            <p>@ListTransactionStatus.Where(w => w.StatusValue == item.status).FirstOrDefault().StatusName</p>
+                        </td>
+                        <td>@item.createDate</td>
+                        <td>@type</td>
+                        <td>
+                            <a href="@Url.Action("EditTransaction","Admin", new { id= item.ID})" class="@className">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@using TraCuuBMT.Models;
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<KetQuaPhanTichPhanLoai> listKQPTPL = (List<KetQuaPhanTichPhanLoai>)ViewBag.ListKQPTPL;
+    var index = 0;
+    var ListGeneralStatus = TraCuuBMT.General.Util.ListGeneralStatus;
+}
+
+
+<div>
+    <h3>Danh sách Kết quả phân tích - phân loại</h3>
+    <div class="contentAdmin">
+        <table class="table table-bordered tableAdmin table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">HS Code</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">ĐVT-BT</th>
+                    <th scope="col">File</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (KetQuaPhanTichPhanLoai item in listKQPTPL)
+                {
+                    index++;
+                    <tr>
+                        <th scope="row">@index</th>
+                        <td style="text-align:left">@item.hsCode</td>
+                        <td>@item.Mota_Dnkhaibao</td>
+                        <td>@item.unit</td>
+                        <td>@item.createDate</td>
+                        <td>@ViewBag.KQPTPLPath@item.link_file_vn</td>
+                        <td>@item.createDate</td>
+                        <td>@ListGeneralStatus.Where(w => w.StatusValue == item.status).FirstOrDefault().StatusName</td>
+
+                        @*<td><button type="button" class="btn btn-success">Chi tiết Biểu thuế</button></td>*@
+                        <td>
+                            <a href="@Url.Action("EditKQPTPL","Admin", new { id= item.ID})" class="btn btn-warning">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

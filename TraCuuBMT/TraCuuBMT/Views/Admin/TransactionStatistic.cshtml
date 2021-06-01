@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<Transaction> listTransaction = (List<Transaction>)ViewBag.ListTransaction;
+    List<User> listUser = (List<User>)ViewBag.ListUser;
+    double rate = listTransaction.Count*1.0 / listUser.Count;
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Thống kê giao dịch</h3>
+    <div class="contentAdmin">
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-2 control-label">Tổng giao dịch</label>
+            <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="@listTransaction.Count">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-2 control-label">Giao dịch đã duyệt</label>
+            <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status == 1).ToList().Count">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-2 control-label">Giao dịch khi đăng ký lần đầu</label>
+            <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.type == 1 && w.status >= 0).ToList().Count">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-2 control-label">Tổng tiền</label>
+            <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status >= 0).ToList().Sum(w => w.currentPrice)">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-2 control-label">Tổng lượt tải</label>
+            <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status >= 0).ToList().Sum(w => w.amount)">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-2 control-label">Tỷ lệ giao dịch/user</label>
+            <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="@String.Format("{0:0.00}", rate)">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+﻿@using TraCuuBMT.Models
+@{
+    User user = (User) Session["userInfo"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+    @*<script src="~/Content/js/jquery-3.6.0.min.js"></script>*@
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/fontawesomeJs.js"></script>
+    <link href="~/Content/css/generalCss.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="modal fade" id="profileModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thông tin tài khoản</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="rowProfile">
+                        <div><i class='fas fa-user-alt'></i></div>
+                        <div>@user.email</div>
+                    </div>
+                    <div class="rowProfile">
+                        <div><i class="fa fa-phone"></i></div>
+                        <div>@user.phone</div>
+                    </div>
+                    <div class="rowProfile">
+                        <div><i class="fas fa-lock"></i></div>
+                        <div>Đổi mật khẩu</div>
+                    </div>
+                    <div class="rowProfile">
+                        <div><i class="fa fa-download"></i></div>
+                        <div>Tài nguyên còn hạn sử dụng: <span style="color:red">10</span> <span><a href="#">Đăng ký thêm</a></span></div>
+                    </div>
+                    <div class="rowProfile">
+                        <div><i class="fa fa-history"></i></div>
+                        <div>Lịch sử giao dịch</div>
+                    </div>
+                    <div class="rowProfile">
+                        <div><i class="fas fa-sign-out-alt" style="color:red"></i></div>
+                        <div><a href="@Url.Action("Logout","Account")" style="text-decoration:none">Đăng xuất</a></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" style="display:flex">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Trang chủ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Mã HS - Biểu thuế", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Cảng cửa khẩu", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Địa điểm lưu kho chờ thông quan", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Mã loại hình", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Hướng dẫn", "Contact", "Home")</li>
+                </ul>
+            </div>
+
+            <div class="userIcon" data-toggle="modal" data-target="#profileModal"><i class='fas fa-user-alt'></i></div>
+
+        </div>
+    </div>
+
+    <div class="container body-content myBody" style="margin-top:100px">
+        @RenderBody()
+    </div>
+    <div class="footer">
+        <p>&copy; @DateTime.Now.Year - Tra cứu Biểu mẫu thuế</p>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @*@RenderSection("scripts", required: false)*@
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TraCuuBMTModelStoreContainer" CdmEntityContainer="TraCuuBMTEntities">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Packages">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.Package">
+        <MappingFragment StoreEntitySet="Package">
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+          <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+          <ScalarProperty Name="creator" ColumnName="creator" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="packageName" ColumnName="packageName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.Transaction">
+        <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+          <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+          <ScalarProperty Name="creator" ColumnName="creator" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="packageId" ColumnName="packageId" />
+          <ScalarProperty Name="currentPrice" ColumnName="currentPrice" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BieuThues">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.BieuThue">
+        <MappingFragment StoreEntitySet="BieuThue">
+          <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+          <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+          <ScalarProperty Name="creator" ColumnName="creator" />
+          <ScalarProperty Name="tenBieuThue" ColumnName="tenBieuThue" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
+          <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
+          <ScalarProperty Name="thueSuat" ColumnName="thueSuat" />
+          <ScalarProperty Name="bieuThue1" ColumnName="bieuThue" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="hsCode" ColumnName="hsCode" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KetQuaPhanTichPhanLoais">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.KetQuaPhanTichPhanLoai">
+        <MappingFragment StoreEntitySet="KetQuaPhanTichPhanLoai">
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="Hieu_Luc_Vanban" ColumnName="Hieu_Luc_Vanban" />
+          <ScalarProperty Name="Co_Quan_YC_PTPL" ColumnName="Co_Quan_YC_PTPL" />
+          <ScalarProperty Name="Loai_Hinh" ColumnName="Loai_Hinh" />
+          <ScalarProperty Name="ToKhai_HQ" ColumnName="ToKhai_HQ" />
+          <ScalarProperty Name="DonVi_XNK" ColumnName="DonVi_XNK" />
+          <ScalarProperty Name="CoQuan_TiepNhan_YC_PTPL" ColumnName="CoQuan_TiepNhan_YC_PTPL" />
+          <ScalarProperty Name="CoQuan_PhatHanh_PTPL" ColumnName="CoQuan_PhatHanh_PTPL" />
+          <ScalarProperty Name="Ngay_Vanban_HH" ColumnName="Ngay_Vanban_HH" />
+          <ScalarProperty Name="Ngay_Vanban" ColumnName="Ngay_Vanban" />
+          <ScalarProperty Name="So_Vanban" ColumnName="So_Vanban" />
+          <ScalarProperty Name="Mota_KQPTPL" ColumnName="Mota_KQPTPL" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+          <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
+          <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
+          <ScalarProperty Name="Mota_Dnkhaibao" ColumnName="Mota_Dnkhaibao" />
+          <ScalarProperty Name="hsCode" ColumnName="hsCode" />
+          <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+          <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+          <ScalarProperty Name="creator" ColumnName="creator" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

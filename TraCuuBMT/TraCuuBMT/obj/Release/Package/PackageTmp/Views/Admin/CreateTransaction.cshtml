@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Tạo mới transaction</h3>
+    <div class="contentAdmin">
+        <form action="@Url.Action("CreateTransaction","Admin")" method="post">
+
+            <div class="form-group">
+                <label for="email">Tên gói(*):</label>
+                <input type="text" class="form-control" id="email" name="packageName" required value="">
+            </div>
+            <div class="form-group">
+                <label for="phone">Mô tả(*):</label>
+                <input type="text" class="form-control" id="phone" name="description" required value="">
+            </div>
+            <div class="form-group">
+                <label for="phone">Đơn giá(*):</label>
+                <input type="text" class="form-control" id="phone" name="price" required value="">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    @foreach (GeneralStatus item in Util.ListGeneralStatus)
+                    {
+                        if (item.StatusValue > 0)
+                        {
+                            <option value="@item.StatusValue">@item.StatusName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="TwoButtonAdmin">
+                <a href="@Url.Action("ListNormalUser","Admin")" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

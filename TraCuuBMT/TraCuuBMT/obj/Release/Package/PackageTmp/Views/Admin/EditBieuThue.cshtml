@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    BieuThue bieuThue = (BieuThue)ViewBag.BieuThue;
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Edit Biểu thuế</h3>
+    <div class="contentAdmin">
+        @*<form action="@Url.Action("EditBieuThue","Admin")" method="post">*@
+        @using (Html.BeginForm("EditBieuThue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <input type="hidden" class="form-control" id="bieuThueId" name="bieuThueId" value="@bieuThue.ID" readonly>
+
+            <div class="form-group">
+                <label for="email">Tên biểu thuế:</label>
+                <input type="text" class="form-control" id="tenBieuThue" name="tenBieuThue" required value="@bieuThue.tenBieuThue">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Mô tả:</label>
+                <textarea class="form-control" id="description" name="description">@bieuThue.description</textarea>
+            </div>
+            <div class="form-group">
+                <label for="phone">HS Code:</label>
+                <input type="text" class="form-control" id="hsCode" name="hsCode" required value="@bieuThue.hsCode">
+            </div>
+            <div class="form-group">
+                <label for="phone">Biểu thuế:</label>
+                <input type="text" class="form-control" id="bieuThue1" name="bieuThue1" required value="@bieuThue.bieuThue1">
+            </div>
+            <div class="form-group">
+                <label for="phone">Thuế suất (%):</label>
+                <input type="text" class="form-control" id="thueSuat" name="thueSuat" required value="@bieuThue.thueSuat">
+            </div>            
+            <div class="form-group">
+                <label for="phone">ĐVT:</label>
+                <input type="text" class="form-control" id="unit" name="unit" required value="@bieuThue.unit">
+            </div>
+            <div class="form-group">
+                <label for="phone">Ghi chú:</label>
+                <textarea class="form-control" id="note" name="note">@bieuThue.note</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="createDate">Ngày tạo:</label>
+                <input type="text" class="form-control" id="createDate" name="createDate" readonly value="@bieuThue.createDate">
+            </div>
+
+            <div class="form-group">
+                <label for="file_vn">File tiếng Việt</label>
+                <input type="file" class="form-control-file" name="file_vn" id="file_vn">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    @foreach (GeneralStatus item in Util.ListGeneralStatus)
+                    {
+                        if (item.StatusValue == bieuThue.status)
+                        {
+                            <option value="@item.StatusValue" selected>@item.StatusName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.StatusValue">@item.StatusName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="TwoButtonAdmin">
+                <a href="@Url.Action("ListBieuThue", "Admin")" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+            @*</form>*@
+        }
+    </div>
+</div>

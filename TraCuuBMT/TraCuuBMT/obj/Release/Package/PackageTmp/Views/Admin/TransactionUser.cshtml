@@ -1,0 +1,99 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<User> listUser = (List<User>)ViewBag.ListUser;
+    List<Transaction> listTransaction = (List<Transaction>)ViewBag.ListTransaction;
+    int count = listTransaction.Where(w => w.type > 1 && w.status >= 0).ToList().Select(w => w.userId).Distinct().ToList().Count;
+
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Báo cáo thống kê</h3>
+    <div class="contentAdmin">
+
+        <div class="form-group" style="height: 34px;">
+            <!-- Date Picker -->
+            <div class="input-group date " id="fromDate">
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <!-- Time Picker -->
+            <div class="input-group date" id="toDate">
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-3 control-label">Tổng số user đăng ký</label>
+            <div class="col-sm-9">
+                <input type="text" disabled class="form-control" value="@listUser.Where(w => w.type == 1).ToList().Count">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-3 control-label">Tổng số tài nguyên đăng ký</label>
+            <div class="col-sm-9">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status >= 0).ToList().Sum(w => w.amount)">
+            </div>
+        </div>
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-3 control-label">Tổng doanh số ghi nhận</label>
+            <div class="col-sm-9">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status >= 0).ToList().Sum(w => w.currentPrice)">
+            </div>
+        </div>
+
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-3 control-label">Chưa thanh toán</label>
+            <div class="col-sm-9">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status >= 0 && w.status != 1).ToList().Sum(w => w.currentPrice)">
+            </div>
+        </div>
+
+
+        <div class="form-group" style="height:34px">
+            <label for="inputEmail3" class="col-sm-3 control-label">Đã thanh toán</label>
+            <div class="col-sm-9">
+                <input type="text" disabled class="form-control" value="@listTransaction.Where(w => w.status == 1).ToList().Sum(w => w.currentPrice)">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $('.input-group.date').datepicker({
+    });
+
+
+    $(document).ready(function () {
+        $('#fromDate').datepicker().on('changeDate', function (ev) {
+            $('#date-daily').change();
+        });
+    });
+
+    function changeDate() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("FirstAjax", "AjaxTest")',
+            contentType: "application/json; charset=utf-8",
+            data: { a: "testing" },
+            dataType: "json",
+            success: function () {
+                alert('Success');
+            },
+            error: function () {
+                alert('call fail');
+            },
+});
+    }
+</script>

@@ -1,0 +1,104 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Đăng nhập | Tra cứu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+
+    <!-- App css -->
+    <link href="~/Content/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="~/Content/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+
+</head>
+
+<body class="loading authentication-bg" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card">
+
+                        <!-- Logo -->
+                        <div class="card-header pt-4 pb-4 text-center bg-primary">
+                            <a href="index.html">
+                                <span><img src="assets/images/logo.png" alt="" height="18"></span>
+                            </a>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Đăng nhập</h4>
+                                <p class="text-muted">Vui lòng nhập thông tin để đăng nhập.</p>
+                                <p class="mb-4"><a href="@Url.Action("Register", "Account")" style="text-decoration:none">Tạo tài khoản</a></p>
+                            </div>
+
+                            <form method="post" action="@Url.Action("Login", "Account")">
+                                <div class="form-group">
+                                    <label for="txtPhone">Điện thoại</label>
+                                    <input class="form-control" type="text" name="txtPhone" id="txtPhone" required="required" placeholder="Số điện thoại" value="0918222222">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtEmail">Email</label>
+                                    <input class="form-control" type="text" name="txtEmail" id="txtEmail" required="required" placeholder="Email" value="vdminh8891@gmail.com">
+                                </div>
+
+                                <div class="form-group">
+                                    <a href="pages-recoverpw.html" class="text-muted float-right"><small>Quên mật khẩu?</small></a>
+                                    <label for="password">Mật khẩu</label>
+                                    <input class="form-control" type="password" required="" name="txtPassword" id="txtPassword" placeholder="Mật khẩu" value="normal">
+                                </div>
+
+                                @*<div class="form-group mb-3">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
+                <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+            </div>
+        </div>*@
+
+                                <div class="form-group mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit"> Đăng nhập </button>
+                                </div>
+
+                            </form>
+                        </div> <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+                    @*<div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <p class="text-muted">Don't have an account? <a href="pages-register.html" class="text-muted ml-1"><b>Sign Up</b></a></p>
+                            </div>
+                        </div>*@
+                    <!-- end row -->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <footer class="footer footer-alt">
+        2021 © Hệ thống tra cứu Biểu mẫu thuế
+    </footer>
+
+    <!-- bundle -->
+    <script src="~/Content/js/vendor.min.js"></script>
+    <script src="~/Content/js/app.min.js"></script>
+
+</body>
+</html>
+

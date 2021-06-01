@@ -1,0 +1,55 @@
+﻿@using TraCuuBMT.Models;
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<BieuThue> listBieuThue = (List<BieuThue>)ViewBag.ListBieuThue;
+    var index = 0;
+    var ListGeneralStatus = TraCuuBMT.General.Util.ListGeneralStatus;
+}
+
+
+<div>
+    <h3>Danh sách Biểu thuế - Thuế suất</h3>
+    <div class="contentAdmin">
+        <table class="table table-bordered tableAdmin table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên biểu thuế</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Hs Code</th>
+                    <th scope="col">Biểu thuế</th>
+                    <th scope="col">Thuế suất (%)</th>
+                    <th scope="col">ĐVT</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (BieuThue item in listBieuThue)
+                {
+                    index++;
+
+                <tr>
+                    <th scope="row">@index</th>
+                    <td style="text-align:left">@item.tenBieuThue</td>
+                    <td>@item.description</td>
+                    <td>@item.hsCode</td>
+                    <td>@item.bieuThue1</td>
+                    <td>@item.thueSuat</td>
+                    <td>@item.unit</td>
+                    <td>@ViewBag.BieuThuePath@item.link_file_vn</td>
+                    
+                    <td>@item.createDate</td>
+                    <td>@ListGeneralStatus.Where(w => w.StatusValue == item.status).FirstOrDefault().StatusName</td>
+
+                    @*<td><button type="button" class="btn btn-success">Chi tiết Biểu thuế</button></td>*@
+                    <td>
+                        <a href="@Url.Action("EditBieuThue","Admin", new { id= item.ID})" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

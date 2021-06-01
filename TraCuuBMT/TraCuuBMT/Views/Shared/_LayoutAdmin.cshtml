@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<html style="height: auto; min-height: 100%;">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tra cứu Biểu mẫu thuế</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/ionicons.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/Admin.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/_all-skins.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/select2.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-datepicker.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/my_css.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/generalCss.css")">
+
+</head>
+
+<body class="skin-blue sidebar-mini" style="height: auto; min-height: 100%;">
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+
+        <header class="main-header">
+
+            <a href="/" class="logo">
+                <span class="logo-mini"><b>L</b>MS</span>
+                <span class="logo-lg"><b>Tra cứu</b> BMT</span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a href="javascript:void(0)" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div id="SearchBox" class="hidden-xs">
+                    <div class="icon-qrcode category focus">
+                        <input class="prompt ebmqrcode" type="text" placeholder="Tìm kiếm..." autocomplete="off">
+                        <i class="fa fa-search settings-toggle inverted circular settings qrcode icon"></i>
+                        <div class="results"></div>
+                    </div>
+                </div>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown notifications-menu">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Bạn có 10 thông báo</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <i class="fa fa-users text-aqua"></i> 5 người dùng tham gia hôm nay
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <i class="fa fa-warning text-yellow"></i> Bạn đã cập nhật thông tin khách hàng Vinh.Nguyễn
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <i class="fa fa-users text-red"></i> 5 người dùng đã tham gia
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <i class="fa fa-shopping-cart text-green"></i> Bạn đã in 25 bill trong ngày
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <i class="fa fa-user text-red"></i> Bạn đã thay đổi thông tin tài khoản
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="javascript:void(0)">Xem tất cả</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown user user-menu">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="@Url.Content("~/Content/images/user2-160x160.jpg")" class="user-image" alt="User Image">
+                                <span class="hidden-xs">Alexander Pierce</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="@Url.Content("~/Content/images/user2-160x160.jpg")" class="img-circle" alt="User Image">
+                                    <p>
+                                        Alexander Pierce - Web Developer
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="javascript:void(0)" class="btn btn-default btn-flat"><i class="fa fa-user-circle"></i>  Thông tin cá nhân</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu tree" data-widget="tree">
+                    <li class="treeview">
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-home"></i> <span>Dashboard</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("TransactionStatistic","Admin")"><i class="fa fa-arrow-circle-right"></i> Thống kê giao dịch</a></li>
+                            <li><a href="@Url.Action("TransactionUser","Admin")"><i class="fa fa-arrow-circle-right"></i> Báo cáo thống kê</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="javascript:void(0)">
+
+                            <i class="fa fa-user"></i> <span>User</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-red">4</small>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("ListNormalUser", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách user thường</a></li>
+                            <li><a href="@Url.Action("CreateNormalUser", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới user thường</a></li>
+                            <li><a href="javascript:void(0)"><i class="fa fa-arrow-circle-right"></i> Danh sách user admin</a></li>
+                            <li><a href="javascript:void(0)"><i class="fa fa-arrow-circle-right"></i> Tạo mới user admin</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="javascript:void(0)">
+
+                            <i class="fa fa-user"></i> <span>Giao dịch</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-red">4</small>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("ListTransaction", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách giao dịch</a></li>
+                            @* <li><a href="@Url.Action("CreateTransaction", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới giao dịch</a></li>*@
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="javascript:void(0)">
+
+                            <i class="fa fa-user"></i> <span>Gói tài nguyên</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-red">4</small>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("ListPackage", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách gói tài nguyên</a></li>
+                            <li><a href="@Url.Action("CreatePackage", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới gói tài nguyên</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="javascript:void(0)">
+
+                            <i class="fa fa-user"></i> <span>Biểu thuế - Thuế suất</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-red">2</small>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("ListBieuThue", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách biểu thuế</a></li>
+                            <li><a href="@Url.Action("CreateBieuThue", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới biểu thuế</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="javascript:void(0)">
+
+                            <i class="fa fa-user"></i> <span>Kết quả PTPL</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-red">2</small>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("ListKQPTPL", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách KQ-PTPL</a></li>
+                            <li><a href="@Url.Action("CreateKQPTPL", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới KQ-PTPL</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+        <div class="content-wrapper containerAdmin" style="min-height: 956px;">
+            <!-- Main content -->
+            @if (TempData["WarningMessage"] != null)
+            {
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> @TempData["WarningMessage"].ToString()
+            </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> @TempData["ErrorMessage"].ToString()
+                </div>
+            }
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    <strong>Success!</strong> @TempData["SuccessMessage"].ToString()
+                </div>
+            }
+            @RenderBody()
+
+        </div>
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0.0
+            </div>
+            <strong>Copyright © 2021 <a href="javascript:void(0)">Tra cứu</a>.</strong> All rights reserved.
+        </footer>
+
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    <script src="@Url.Content("~/Content/js/jquery-3.6.0.min.js")"></script>
+    <script src="@Url.Content("~/Content/js/fastclick.js")"></script>
+    <script src="@Url.Content("~/Content/js/admin.min.js")"></script>
+    <script src="@Url.Content("~/Content/js/demo.js")"></script>
+    <script src="@Url.Content("~/Content/js/select2.full.min.js")"></script>
+    <script src="@Url.Content("~/Content/js/bootstrap-datepicker.js")"></script>
+    <script src="@Url.Content("~/Content/js/my_js.js")"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            ////Date picker
+            //$('#internationalBill_ngayKhoiHanh').datepicker({
+            //    autoclose: true
+            //})
+            //$('#internationalBill_ngayDen').datepicker({
+            //    autoclose: true
+            //})
+
+            $('.input-group.date').datepicker({
+            });
+        })
+    </script>
+</body>
+</html>

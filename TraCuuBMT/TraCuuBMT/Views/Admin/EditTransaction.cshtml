@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Transaction item = (Transaction)ViewBag.Transaction;
+    List<User> listUser = (List<User>)ViewBag.ListUser;
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Duyệt giao dịch</h3>
+    <div class="contentAdmin">
+        <form action="@Url.Action("EditTransaction", "Admin")" method="post">
+            <input type="hidden" class="form-control" id="transactionId" name="transactionId" value="@item.ID" readonly>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" value="@listUser.Where(w => w.ID == item.userId).FirstOrDefault().email" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="@listUser.Where(w => w.ID == item.userId).FirstOrDefault().phone" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phone">Tiền (VNĐ):</label>
+                <input type="text" class="form-control" id="currentPrice" name="currentPrice" value="@item.currentPrice.ToString()" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phone">Lượt tải:</label>
+                <input type="text" class="form-control" id="amount" name="amount" value="@item.amount.ToString()" readonly>
+            </div>
+            <div class="form-group">
+                <label for="createDate">Ngày tạo:</label>
+                <input type="text" class="form-control" id="createDate" name="createDate" readonly value="@item.createDate">
+            </div>
+            <div class="form-group">
+                <label for="phone">Người tạo:</label>
+                <input type="text" class="form-control" id="creator" name="creator" value="@item.creator" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phone">Ghi chú:</label>
+                <textarea class="form-control" id="note" name="note">@item.note</textarea>
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    @foreach (GeneralStatus itemStatus in Util.ListTransactionStatus)
+                    {
+                        if (itemStatus.StatusValue == item.status)
+                        {
+                            <option value="@itemStatus.StatusValue" selected>@itemStatus.StatusName</option>
+                        }
+                        else
+                        {
+                            if (itemStatus.StatusValue != 1)
+                            {
+                                <option value="@itemStatus.StatusValue">@itemStatus.StatusName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="TwoButtonAdmin">
+                <a href="@Url.Action("ListTransaction","Admin")" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

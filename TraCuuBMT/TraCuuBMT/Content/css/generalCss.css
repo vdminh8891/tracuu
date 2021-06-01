@@ -1,0 +1,122 @@
+﻿body {
+}
+
+.control-label{
+    line-height:34px;
+}
+
+#fromDate, #toDate {
+    width: 20%;
+    float: left;
+    margin-left: 15px;
+}
+
+.disabledLink {
+    pointer-events: none;
+    cursor: default;
+    background-color:gray;
+}
+
+.TwoButtonAdmin{
+    float:right;
+}
+
+.containerAdmin {
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+}
+
+.contentAdmin {
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    min-height: 100vh;
+}
+
+.tableAdmin {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+    .tableAdmin td, .tableAdmin th {
+        text-align: center;
+    }
+
+.searchArea {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.gearButton {
+    margin-left: 10px;
+}
+
+.userIcon {
+    font-size: 20px;
+    color: white;
+    line-height: 50px;
+    width: fit-content;
+    float: right;
+    right: 40px;
+    position: absolute;
+    cursor: pointer;
+}
+
+#profileModal > .modal-dialog {
+    right: 60px;
+    top: 20px;
+    float: right;
+    width: 350px;
+}
+
+.rowProfile {
+    display: flex;
+}
+
+div > .rowProfile:not(:first-child) {
+    margin-top: 5px;
+}
+
+.rowProfile > div:nth-child(2) {
+    margin-left: 10px;
+}
+
+.BieuThueTable td, .BieuThueTable th {
+    text-align: center;
+}
+
+.caret.caret-up {
+    border-top-width: 0;
+    border-bottom: 4px solid #fff;
+}
+
+.myDropDown {
+    width: 230px;
+    display: flex;
+}
+
+.myCaret {
+    position: absolute;
+    right: 10px;
+    line-height: 20px;
+    margin-top: 8px;
+}
+
+.footer {
+    position: relative;
+    margin-top: -50px;
+    height: 50px;
+    clear: both;
+    background-color: #333;
+    color: #9d9d9d;
+    line-height: 50px;
+    text-align: center;
+}
+
+.myBody {
+    height: 100%;
+    min-height: 830px;
+}
