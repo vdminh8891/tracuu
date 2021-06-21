@@ -7,18 +7,51 @@
     <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="createDate" Type="datetime" Nullable="false" />
     <Property Name="status" Type="int" Nullable="false" />
-    <Property Name="hsCode" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="description" Type="nvarchar(max)" />
-    <Property Name="unit" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="bieuThue" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="thueSuat" Type="float" Nullable="false" />
-    <Property Name="link_file_vn" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="link_file_en" Type="nvarchar" MaxLength="200" />
-    <Property Name="note" Type="nvarchar(max)" />
-    <Property Name="tenBieuThue" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="creator" Type="nvarchar" MaxLength="50" />
     <Property Name="lastEditDate" Type="datetime" />
     <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
+    <Property Name="note" Type="nvarchar(max)" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="HS_CODE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DVT_SL2" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="link_file_vn" Type="nvarchar(max)" />
+    <Property Name="link_file_en" Type="nvarchar(max)" />
+    <Property Name="tenBieuThue" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Ten_Hanghoa_VN" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Ten_Hanghoa_EN" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="THUE_EXPORT" Type="float" />
+    <Property Name="THUE_BVMT" Type="float" />
+    <Property Name="THUE_TTDB" Type="float" />
+    <Property Name="THUE_TVCBPG" Type="float" />
+    <Property Name="THUE_PBDX" Type="float" />
+    <Property Name="B01" Type="float" />
+    <Property Name="B02" Type="float" />
+    <Property Name="B03" Type="float" />
+    <Property Name="B04" Type="float" />
+    <Property Name="B05" Type="float" />
+    <Property Name="B06" Type="float" />
+    <Property Name="B07" Type="float" />
+    <Property Name="B08" Type="float" />
+    <Property Name="B09" Type="float" />
+    <Property Name="B10" Type="float" />
+    <Property Name="B11" Type="float" />
+    <Property Name="B12" Type="float" />
+    <Property Name="B13" Type="float" />
+    <Property Name="B14" Type="float" />
+    <Property Name="B15" Type="float" />
+    <Property Name="B16" Type="float" />
+    <Property Name="B17" Type="float" />
+    <Property Name="B18" Type="float" />
+    <Property Name="B19" Type="float" />
+    <Property Name="B20" Type="float" />
+    <Property Name="B21" Type="float" />
+    <Property Name="B22" Type="float" />
+    <Property Name="B23" Type="float" />
+    <Property Name="B24" Type="float" />
+    <Property Name="B25" Type="float" />
+    <Property Name="B30" Type="float" />
+    <Property Name="B61" Type="float" />
+    <Property Name="B99" Type="float" />
   </EntityType>
   <EntityType Name="KetQuaPhanTichPhanLoai">
     <Key>
@@ -66,6 +99,17 @@
     <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
     <Property Name="amount" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ThueVAT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="int" Nullable="false" />
+    <Property Name="mota" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="value" Type="float" Nullable="false" />
+    <Property Name="note" Type="nvarchar(max)" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="Transaction">
     <Key>
       <PropertyRef Name="ID" />
@@ -101,6 +145,7 @@
     <EntitySet Name="BieuThue" EntityType="Self.BieuThue" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KetQuaPhanTichPhanLoai" EntityType="Self.KetQuaPhanTichPhanLoai" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThueVAT" EntityType="Self.ThueVAT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

@@ -53,27 +53,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="BieuThues">
-      <EntityTypeMapping TypeName="TraCuuBMTModel.BieuThue">
-        <MappingFragment StoreEntitySet="BieuThue">
-          <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
-          <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
-          <ScalarProperty Name="creator" ColumnName="creator" />
-          <ScalarProperty Name="tenBieuThue" ColumnName="tenBieuThue" />
-          <ScalarProperty Name="note" ColumnName="note" />
-          <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
-          <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
-          <ScalarProperty Name="thueSuat" ColumnName="thueSuat" />
-          <ScalarProperty Name="bieuThue1" ColumnName="bieuThue" />
-          <ScalarProperty Name="unit" ColumnName="unit" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="hsCode" ColumnName="hsCode" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="KetQuaPhanTichPhanLoais">
       <EntityTypeMapping TypeName="TraCuuBMTModel.KetQuaPhanTichPhanLoai">
         <MappingFragment StoreEntitySet="KetQuaPhanTichPhanLoai">
@@ -94,6 +73,72 @@
           <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
           <ScalarProperty Name="Mota_Dnkhaibao" ColumnName="Mota_Dnkhaibao" />
           <ScalarProperty Name="hsCode" ColumnName="hsCode" />
+          <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+          <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+          <ScalarProperty Name="creator" ColumnName="creator" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThueVATs">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.ThueVAT">
+        <MappingFragment StoreEntitySet="ThueVAT">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="mota" ColumnName="mota" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BieuThues">
+      <EntityTypeMapping TypeName="TraCuuBMTModel.BieuThue">
+        <MappingFragment StoreEntitySet="BieuThue">
+          <ScalarProperty Name="B99" ColumnName="B99" />
+          <ScalarProperty Name="B61" ColumnName="B61" />
+          <ScalarProperty Name="B30" ColumnName="B30" />
+          <ScalarProperty Name="B25" ColumnName="B25" />
+          <ScalarProperty Name="B24" ColumnName="B24" />
+          <ScalarProperty Name="B23" ColumnName="B23" />
+          <ScalarProperty Name="B22" ColumnName="B22" />
+          <ScalarProperty Name="B21" ColumnName="B21" />
+          <ScalarProperty Name="B20" ColumnName="B20" />
+          <ScalarProperty Name="B19" ColumnName="B19" />
+          <ScalarProperty Name="B18" ColumnName="B18" />
+          <ScalarProperty Name="B17" ColumnName="B17" />
+          <ScalarProperty Name="B16" ColumnName="B16" />
+          <ScalarProperty Name="B15" ColumnName="B15" />
+          <ScalarProperty Name="B14" ColumnName="B14" />
+          <ScalarProperty Name="B13" ColumnName="B13" />
+          <ScalarProperty Name="B12" ColumnName="B12" />
+          <ScalarProperty Name="B11" ColumnName="B11" />
+          <ScalarProperty Name="B10" ColumnName="B10" />
+          <ScalarProperty Name="B09" ColumnName="B09" />
+          <ScalarProperty Name="B08" ColumnName="B08" />
+          <ScalarProperty Name="B07" ColumnName="B07" />
+          <ScalarProperty Name="B06" ColumnName="B06" />
+          <ScalarProperty Name="B05" ColumnName="B05" />
+          <ScalarProperty Name="B04" ColumnName="B04" />
+          <ScalarProperty Name="B03" ColumnName="B03" />
+          <ScalarProperty Name="B02" ColumnName="B02" />
+          <ScalarProperty Name="B01" ColumnName="B01" />
+          <ScalarProperty Name="THUE_PBDX" ColumnName="THUE_PBDX" />
+          <ScalarProperty Name="THUE_TVCBPG" ColumnName="THUE_TVCBPG" />
+          <ScalarProperty Name="THUE_TTDB" ColumnName="THUE_TTDB" />
+          <ScalarProperty Name="THUE_BVMT" ColumnName="THUE_BVMT" />
+          <ScalarProperty Name="THUE_EXPORT" ColumnName="THUE_EXPORT" />
+          <ScalarProperty Name="Ten_Hanghoa_EN" ColumnName="Ten_Hanghoa_EN" />
+          <ScalarProperty Name="Ten_Hanghoa_VN" ColumnName="Ten_Hanghoa_VN" />
+          <ScalarProperty Name="tenBieuThue" ColumnName="tenBieuThue" />
+          <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
+          <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
+          <ScalarProperty Name="DVT_SL2" ColumnName="DVT_SL2" />
+          <ScalarProperty Name="HS_CODE" ColumnName="HS_CODE" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="note" ColumnName="note" />
           <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
           <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
           <ScalarProperty Name="creator" ColumnName="creator" />

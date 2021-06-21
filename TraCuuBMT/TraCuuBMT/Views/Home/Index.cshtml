@@ -1,8 +1,10 @@
 ﻿@using TraCuuBMT.Models
 @{
     ViewBag.Title = "Home Page";
-    List<TraCuuBMT.Models.BieuThue> listBieuThue = ViewBag.ListBieuThue;
-    List<TraCuuBMT.Models.KetQuaPhanTichPhanLoai> listKQPTPL = ViewBag.ListKQPTPL;
+    List<BieuThue> listBieuThue = ViewBag.ListBieuThue;
+    List<SubBieuThue> listSubBieuThue = ViewBag.ListSubBieuThue;
+    List<KetQuaPhanTichPhanLoai> listKQPTPL = ViewBag.ListKQPTPL;
+    List<ThueVAT> listThueVAT = ViewBag.ListThueVAT;
     User user = (User)Session["userInfo"];
 }
 <!-- Modal -->
@@ -17,10 +19,10 @@
             </div>
             <div class="modal-body">
                 <div class="checkbox">
-                    <label><input type="checkbox" value="">HS Code</label>
+                    <label><input type="checkbox" name="hsCodeCheckBox" checked id="hsCodeCheckBox" value="">HS Code</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" value="">Mô tả hàng hóa</label>
+                    <label><input type="checkbox" name="motaCheckBox" checked id="motaCheckBox" value="">Mô tả hàng hóa</label>
                 </div>
             </div>
             <div class="modal-footer">
@@ -63,6 +65,7 @@
 
 <div class="searchArea">
     <input id="email" readonly style="display:none" value="@user.email" />
+    <input id="type" readonly style="display:none" value="@ViewBag.type" />
     <div class="dropdown ">
         <button class="btn btn-primary dropdown-toggle myDropDown" type="button" data-toggle="dropdown">
             <span id="selectSpan">Chọn đối tượng tra cứu</span>
@@ -90,11 +93,11 @@
     </div>
 
     <div class="col-xs-4" style="margin-left:10px;">
-        <input type="text" class="form-control col-xs-4" id="seachKeyword">
+        <input type="text" class="form-control col-xs-4" value="@ViewBag.Keyword" id="seachKeyword">
     </div>
 
     <div style="margin-left:10px;">
-        <button type="button" class="btn btn-default">
+        <button type="button" id="search" class="btn btn-default">
             <span class="glyphicon glyphicon-search"></span> Tìm
         </button>
     </div>
@@ -104,11 +107,11 @@
 <div id="bieuThueArea">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Biểu thuế - Thuế suất</a></li>
-        <li><a data-toggle="tab" href="#menu1">Thuế VAT</a></li>
-        <li><a data-toggle="tab" href="#menu2">Thuế bảo vệ môi trường</a></li>
-        <li><a data-toggle="tab" href="#menu3">Thuế tiêu thụ đặc biệt</a></li>
-        <li><a data-toggle="tab" href="#menu4">Thuế TV - CBPG</a></li>
-        <li><a data-toggle="tab" href="#menu5">Thuế PBĐX</a></li>
+        <li><a data-toggle="tab" href="#thueVAT">Thuế VAT</a></li>
+        <li><a data-toggle="tab" href="#thueBVMT">Thuế bảo vệ môi trường</a></li>
+        <li><a data-toggle="tab" href="#thueTTDB">Thuế tiêu thụ đặc biệt</a></li>
+        <li><a data-toggle="tab" href="#thueTVCBPG">Thuế TV - CBPG</a></li>
+        <li><a data-toggle="tab" href="#thuePBDX">Thuế PBĐX</a></li>
     </ul>
 
     <div class="tab-content">
@@ -128,66 +131,161 @@
                 </thead>
                 <tbody>
                     @{
-                        int indexBieuThue = 1;
-                        foreach (var item in listBieuThue)
+                        int indexSubBieuThue = 1;
+                        foreach (var item in listSubBieuThue)
                         {
                             <tr>
-                                <th scope="row">@indexBieuThue</th>
-                                <td>@item.hsCode</td>
-                                <td>@item.unit</td>
-                                <td>@item.bieuThue1</td>
-                                <td>@item.thueSuat</td>
+                                <th scope="row">@indexSubBieuThue</th>
+                                <td>@item.HS_CODE</td>
+                                <td>@item.DVT_SL2</td>
+                                <td>@item.B_Title</td>
+                                <td>@item.B_Value</td>
                                 <td>@item.tenBieuThue</td>
                                 <td>@item.note</td>
                             </tr>
+                            indexSubBieuThue++;
                         }
-                        indexBieuThue++;
                     }
                 </tbody>
             </table>
         </div>
-        <div id="menu1" class="tab-pane fade">
+        <div id="thueVAT" class="tab-pane fade">
             <h3>Thuế VAT</h3>
             <table class="table table-bordered BieuThueTable">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">ĐVT/SL2</th>
-                        <th scope="col">Biểu thuế</th>
-                        <th scope="col">Thuế suất(%)</th>
-                        <th scope="col">Tên biểu thuế</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col" style="width:70%;">Mô tả</th>
+                        <th scope="col">Dữ liệu</th>
                         <th scope="col">Ghi chú</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>01012100</td>
-                        <td>KGM/Tấn</td>
-                        <td>B01</td>
-                        <td>5</td>
-                        <td>Thuế nhập khẩu ưu đãi MFN</td>
-                        <td>ghi chú abc</td>
-                    </tr>
+                    @{
+                        int indexThueVAT = 1;
+                        foreach (var item in listThueVAT)
+                        {
+                            <tr>
+                                <th scope="row">@indexThueVAT</th>
+                                <td>@item.name</td>
+                                <td>@item.mota</td>
+                                <td>@item.value</td>
+                                <td>@item.note</td>
+                            </tr>
+                            indexThueVAT++;
+                        }
+                    }
                 </tbody>
             </table>
         </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Some content in menu 2.</p>
+        <div id="thueBVMT" class="tab-pane fade">
+            <h3>Thuế bảo vệ môi trường</h3>
+            <table class="table table-bordered BieuThueTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">HS Code</th>
+                        <th scope="col">Thuế bảo vệ môi trường</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int indexThueBVMT = 1;
+                        foreach (var item in listBieuThue)
+                        {
+                            string isThue = item.THUE_BVMT > 0 ? "Có" : "Không";
+                            <tr>
+                                <th scope="row">@indexThueBVMT</th>
+                                <td>@item.HS_CODE</td>
+                                <td>@isThue</td>
+                            </tr>
+                            indexThueBVMT++;
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Some content in menu 3.</p>
+        <div id="thueTTDB" class="tab-pane fade">
+            <h3>Thuế tiêu thụ đặc biệt</h3>
+            <table class="table table-bordered BieuThueTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">HS Code</th>
+                        <th scope="col">Thuế tiêu thụ đặc biệt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int indexThueTTDB = 1;
+                        foreach (var item in listBieuThue)
+                        {
+                            string isThue = item.THUE_TTDB > 0 ? "Có" : "Không";
+                            <tr>
+                                <th scope="row">@indexThueTTDB</th>
+                                <td>@item.HS_CODE</td>
+                                <td>@isThue</td>
+                            </tr>
+                            indexThueTTDB++;
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-        <div id="menu4" class="tab-pane fade">
-            <h3>Menu 4</h3>
-            <p>Some content in menu 4.</p>
+        <div id="thueTVCBPG" class="tab-pane fade">
+            <h3>Thuế TV - CBPG</h3>
+            <table class="table table-bordered BieuThueTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">HS Code</th>
+                        <th scope="col">Thuế TV - CBPG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int indexThueTVCBPG = 1;
+                        foreach (var item in listBieuThue)
+                        {
+                            string isThue = item.THUE_TVCBPG > 0 ? "Có" : "Không";
+                            <tr>
+                                <th scope="row">@indexThueTVCBPG</th>
+                                <td>@item.HS_CODE</td>
+                                <td>@isThue</td>
+                            </tr>
+                            indexThueTVCBPG++;
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-        <div id="menu5" class="tab-pane fade">
-            <h3>Menu 5</h3>
-            <p>Some content in menu 5.</p>
+        <div id="thuePBDX" class="tab-pane fade">
+            <h3>Thuế PBĐX</h3>
+            <table class="table table-bordered BieuThueTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">HS Code</th>
+                        <th scope="col">Thuế PBĐX</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int indexThuePBDX = 1;
+                        foreach (var item in listBieuThue)
+                        {
+                            string isThue = item.THUE_PBDX > 0 ? "Có" : "Không";
+                            <tr>
+                                <th scope="row">@indexThuePBDX</th>
+                                <td>@item.HS_CODE</td>
+                                <td>@isThue</td>
+                            </tr>
+                            indexThuePBDX++;
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -228,8 +326,8 @@
                                 <td><a href="">Xem nội dung</a></td>
                                 <td><div style="cursor:pointer" class="openConfirmSendEmail" data-id="@item.ID" data-toggle="modal" data-target="#confirmSendEmail">Gửi văn bản về email</div></td>
                             </tr>
+                            indexKQPTPL++;
                         }
-                        indexKQPTPL++;
                     }
                 </tbody>
             </table>
@@ -250,6 +348,7 @@
 <div id="maLoaiHinhArea"></div>
 
 <script>
+    var type = 1;
     $(function () {
         $(document).on("click", ".openConfirmSendEmail", function () {
             var itemId = $(this).data('id');
@@ -266,7 +365,23 @@
             showArea($(this).attr("data-content"));
         });
 
-        showArea("bieuThueArea");
+        $("#search").on('click', function () {
+            var seachKeyword = $('#seachKeyword').val();
+            var url = "/Home/Index?type=" + type;
+            var isHsCode = $('input[name="hsCodeCheckBox"]:checked').length > 0;
+            var isMota = $('input[name="motaCheckBox"]:checked').length > 0;
+
+            if (isHsCode) {
+                url += "&hsCode=" + seachKeyword;
+            }
+            if (isMota) {
+                url += "&mota=" + seachKeyword;
+            }
+
+            location = url;
+        });
+
+        initFunction();
 
 
         $("#sendEmail").click(function () {
@@ -299,6 +414,52 @@
         $("#ddLkChoThongQuanArea").hide();
         $("#maLoaiHinhArea").hide();
 
+        type = getTypeById(id);
+
         $("#" + id).show();
+    }
+
+    function initFunction() {
+        var type = $("#type").val();
+        if (!(type > 0)) type = "1";
+        var id = "";
+
+        id = getIdByType(type);
+        var selectedTab = $("a[data-content='" + id +"']").text();
+
+        $("#selectSpan").text(selectedTab);
+        $("#selectSpan").val(selectedTab);
+
+        showArea(id);
+    }
+
+    function getIdByType(type) {
+        var id = 1;
+        switch (type) {
+            case "1":
+                id = "bieuThueArea";
+                break;
+            case "2":
+                id = "kqPhanTichPhanLoaiArea";
+                break;
+        }
+
+        return id;
+    }
+
+    function getTypeById(id) {
+        var type = "bieuThueArea";
+
+        switch (id) {
+            case "bieuThueArea":
+                type = "1";
+                break;
+
+            case "kqPhanTichPhanLoaiArea":
+                type = "2";
+                break;
+        }
+
+        return type;
     }
 </script>

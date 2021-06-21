@@ -28,7 +28,8 @@ namespace TraCuuBMT.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Package> Packages { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
-        public virtual DbSet<BieuThue> BieuThues { get; set; }
         public virtual DbSet<KetQuaPhanTichPhanLoai> KetQuaPhanTichPhanLoais { get; set; }
+        public virtual DbSet<ThueVAT> ThueVATs { get; set; }
+        public virtual DbSet<BieuThue> BieuThues { get; set; }
     }
 }

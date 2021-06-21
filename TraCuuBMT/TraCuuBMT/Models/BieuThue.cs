@@ -17,17 +17,50 @@ namespace TraCuuBMT.Models
         public string ID { get; set; }
         public System.DateTime createDate { get; set; }
         public int status { get; set; }
-        public string hsCode { get; set; }
-        public string description { get; set; }
-        public string unit { get; set; }
-        public string bieuThue1 { get; set; }
-        public double thueSuat { get; set; }
-        public string link_file_vn { get; set; }
-        public string link_file_en { get; set; }
-        public string note { get; set; }
-        public string tenBieuThue { get; set; }
         public string creator { get; set; }
         public Nullable<System.DateTime> lastEditDate { get; set; }
         public string lastEditor { get; set; }
+        public string note { get; set; }
+        public string description { get; set; }
+        public string HS_CODE { get; set; }
+        public string DVT_SL2 { get; set; }
+        public string link_file_vn { get; set; }
+        public string link_file_en { get; set; }
+        public string tenBieuThue { get; set; }
+        public string Ten_Hanghoa_VN { get; set; }
+        public string Ten_Hanghoa_EN { get; set; }
+        public Nullable<double> THUE_EXPORT { get; set; }
+        public Nullable<double> THUE_BVMT { get; set; }
+        public Nullable<double> THUE_TTDB { get; set; }
+        public Nullable<double> THUE_TVCBPG { get; set; }
+        public Nullable<double> THUE_PBDX { get; set; }
+        public Nullable<double> B01 { get; set; }
+        public Nullable<double> B02 { get; set; }
+        public Nullable<double> B03 { get; set; }
+        public Nullable<double> B04 { get; set; }
+        public Nullable<double> B05 { get; set; }
+        public Nullable<double> B06 { get; set; }
+        public Nullable<double> B07 { get; set; }
+        public Nullable<double> B08 { get; set; }
+        public Nullable<double> B09 { get; set; }
+        public Nullable<double> B10 { get; set; }
+        public Nullable<double> B11 { get; set; }
+        public Nullable<double> B12 { get; set; }
+        public Nullable<double> B13 { get; set; }
+        public Nullable<double> B14 { get; set; }
+        public Nullable<double> B15 { get; set; }
+        public Nullable<double> B16 { get; set; }
+        public Nullable<double> B17 { get; set; }
+        public Nullable<double> B18 { get; set; }
+        public Nullable<double> B19 { get; set; }
+        public Nullable<double> B20 { get; set; }
+        public Nullable<double> B21 { get; set; }
+        public Nullable<double> B22 { get; set; }
+        public Nullable<double> B23 { get; set; }
+        public Nullable<double> B24 { get; set; }
+        public Nullable<double> B25 { get; set; }
+        public Nullable<double> B30 { get; set; }
+        public Nullable<double> B61 { get; set; }
+        public Nullable<double> B99 { get; set; }
     }
 }

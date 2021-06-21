@@ -1,8 +1,12 @@
 ﻿body {
 }
 
-.control-label{
-    line-height:34px;
+.tab-content{
+    min-height:100vh;
+}
+
+.control-label {
+    line-height: 34px;
 }
 
 #fromDate, #toDate {

@@ -18,8 +18,9 @@
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="Packages" EntityType="TraCuuBMTModel.Package" />
     <EntitySet Name="Transactions" EntityType="TraCuuBMTModel.Transaction" />
-    <EntitySet Name="BieuThues" EntityType="TraCuuBMTModel.BieuThue" />
     <EntitySet Name="KetQuaPhanTichPhanLoais" EntityType="TraCuuBMTModel.KetQuaPhanTichPhanLoai" />
+    <EntitySet Name="ThueVATs" EntityType="TraCuuBMTModel.ThueVAT" />
+    <EntitySet Name="BieuThues" EntityType="TraCuuBMTModel.BieuThue" />
   </EntityContainer>
   <EntityType Name="Package">
     <Key>
@@ -56,26 +57,6 @@
     <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="amount" Type="Int32" Nullable="false" />
   </EntityType>
-  <EntityType Name="BieuThue">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="status" Type="Int32" Nullable="false" />
-    <Property Name="hsCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="bieuThue1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="thueSuat" Type="Double" Nullable="false" />
-    <Property Name="link_file_vn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="link_file_en" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="tenBieuThue" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="creator" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="lastEditDate" Type="DateTime" Precision="3" />
-    <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="KetQuaPhanTichPhanLoai">
     <Key>
       <PropertyRef Name="ID" />
@@ -103,5 +84,69 @@
     <Property Name="Co_Quan_YC_PTPL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Hieu_Luc_Vanban" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ThueVAT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <Property Name="mota" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="value" Type="Double" Nullable="false" />
+    <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BieuThue">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="lastEditDate" Type="DateTime" Precision="3" />
+    <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="HS_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DVT_SL2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="link_file_vn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="link_file_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="tenBieuThue" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Ten_Hanghoa_VN" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Ten_Hanghoa_EN" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="THUE_EXPORT" Type="Double" />
+    <Property Name="THUE_BVMT" Type="Double" />
+    <Property Name="THUE_TTDB" Type="Double" />
+    <Property Name="THUE_TVCBPG" Type="Double" />
+    <Property Name="THUE_PBDX" Type="Double" />
+    <Property Name="B01" Type="Double" />
+    <Property Name="B02" Type="Double" />
+    <Property Name="B03" Type="Double" />
+    <Property Name="B04" Type="Double" />
+    <Property Name="B05" Type="Double" />
+    <Property Name="B06" Type="Double" />
+    <Property Name="B07" Type="Double" />
+    <Property Name="B08" Type="Double" />
+    <Property Name="B09" Type="Double" />
+    <Property Name="B10" Type="Double" />
+    <Property Name="B11" Type="Double" />
+    <Property Name="B12" Type="Double" />
+    <Property Name="B13" Type="Double" />
+    <Property Name="B14" Type="Double" />
+    <Property Name="B15" Type="Double" />
+    <Property Name="B16" Type="Double" />
+    <Property Name="B17" Type="Double" />
+    <Property Name="B18" Type="Double" />
+    <Property Name="B19" Type="Double" />
+    <Property Name="B20" Type="Double" />
+    <Property Name="B21" Type="Double" />
+    <Property Name="B22" Type="Double" />
+    <Property Name="B23" Type="Double" />
+    <Property Name="B24" Type="Double" />
+    <Property Name="B25" Type="Double" />
+    <Property Name="B30" Type="Double" />
+    <Property Name="B61" Type="Double" />
+    <Property Name="B99" Type="Double" />
   </EntityType>
 </Schema>

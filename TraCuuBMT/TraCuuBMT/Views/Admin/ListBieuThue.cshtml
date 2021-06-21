@@ -17,8 +17,6 @@
                     <th scope="col">Tên biểu thuế</th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Hs Code</th>
-                    <th scope="col">Biểu thuế</th>
-                    <th scope="col">Thuế suất (%)</th>
                     <th scope="col">ĐVT</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">Trạng thái</th>
@@ -34,11 +32,8 @@
                     <th scope="row">@index</th>
                     <td style="text-align:left">@item.tenBieuThue</td>
                     <td>@item.description</td>
-                    <td>@item.hsCode</td>
-                    <td>@item.bieuThue1</td>
-                    <td>@item.thueSuat</td>
-                    <td>@item.unit</td>
-                    <td>@ViewBag.BieuThuePath@item.link_file_vn</td>
+                    <td>@item.HS_CODE</td>
+                    <td>@item.DVT_SL2</td>
                     
                     <td>@item.createDate</td>
                     <td>@ListGeneralStatus.Where(w => w.StatusValue == item.status).FirstOrDefault().StatusName</td>

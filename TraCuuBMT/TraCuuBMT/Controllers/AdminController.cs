@@ -157,32 +157,73 @@ namespace TraCuuBMT.Controllers
             using (var db = new TraCuuBMTEntities())
             {
                 string bieuThueId = form["bieuThueId"] ?? "";
+                string statusString = form["status"] ?? "";
                 string tenBieuThue = form["tenBieuThue"];
                 string description = form["description"];
-                string hsCode = form["hsCode"];
-                string bieuThue1 = form["bieuThue1"];
-                string thueSuat = form["thueSuat"];
+                string Ten_Hanghoa_VN = form["Ten_Hanghoa_VN"];
+                string Ten_Hanghoa_EN = form["Ten_Hanghoa_EN"];
+                string HS_CODE = form["HS_CODE"];
                 string note = form["note"];
-                string unit = form["unit"];
-                string statusString = form["status"] ?? "";
-                if (file_vn?.ContentLength != 0)
+                string DVT_SL2 = form["DVT_SL2"];
+                double B01 = Util.ParseStringToFloat(form["B01"] ?? "");
+                double B02 = Util.ParseStringToFloat(form["B02"] ?? "");
+                double B03 = Util.ParseStringToFloat(form["B03"] ?? "");
+                double B04 = Util.ParseStringToFloat(form["B04"] ?? "");
+                double B05 = Util.ParseStringToFloat(form["B05"] ?? "");
+                double B06 = Util.ParseStringToFloat(form["B06"] ?? "");
+                double B07 = Util.ParseStringToFloat(form["B07"] ?? "");
+                double B08 = Util.ParseStringToFloat(form["B08"] ?? "");
+                double B09 = Util.ParseStringToFloat(form["B09"] ?? "");
+                double B10 = Util.ParseStringToFloat(form["B10"] ?? "");
+                double B11 = Util.ParseStringToFloat(form["B11"] ?? "");
+                double B12 = Util.ParseStringToFloat(form["B12"] ?? "");
+                double B13 = Util.ParseStringToFloat(form["B13"] ?? "");
+                double B14 = Util.ParseStringToFloat(form["B14"] ?? "");
+                double B15 = Util.ParseStringToFloat(form["B15"] ?? "");
+                double B16 = Util.ParseStringToFloat(form["B16"] ?? "");
+                double B17 = Util.ParseStringToFloat(form["B17"] ?? "");
+                double B18 = Util.ParseStringToFloat(form["B18"] ?? "");
+                double B19 = Util.ParseStringToFloat(form["B19"] ?? "");
+                double B20 = Util.ParseStringToFloat(form["B20"] ?? "");
+                double B21 = Util.ParseStringToFloat(form["B21"] ?? "");
+                double B22 = Util.ParseStringToFloat(form["B22"] ?? "");
+                double B23 = Util.ParseStringToFloat(form["B23"] ?? "");
+                double B24 = Util.ParseStringToFloat(form["B24"] ?? "");
+                double B25 = Util.ParseStringToFloat(form["B25"] ?? "");
+                double B30 = Util.ParseStringToFloat(form["B30"] ?? "");
+                double B61 = Util.ParseStringToFloat(form["B61"] ?? "");
+                double B99 = Util.ParseStringToFloat(form["B99"] ?? "");
+                string FileName = "";
+                if (file_vn != null && file_vn?.ContentLength != 0)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(file_vn.FileName);
+                    try
+                    {
+                        FileName = Path.GetFileNameWithoutExtension(file_vn.FileName);
 
-                    //To Get File Extension  
-                    string FileExtension = Path.GetExtension(file_vn.FileName);
+                        //To Get File Extension  
+                        string FileExtension = Path.GetExtension(file_vn.FileName);
 
-                    //Add Current Date To Attached File Name  
-                    FileName = "BieuThue_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
+                        //Add Current Date To Attached File Name  
+                        FileName = "BieuThue_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
 
-                    //Get Upload path from Web.Config file AppSettings.  
-                    string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["BieuThuePath"].ToString());
+                        //Get Upload path from Web.Config file AppSettings.  
+                        string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["BieuThuePath"].ToString());
+                        //string UploadPath = Server.MapPath("./") + ConfigurationManager.AppSettings["BieuThuePath"].ToString();
+                        if (!Directory.Exists(UploadPath))
+                        {
+                            Directory.CreateDirectory(UploadPath);
+                        }
+                        //Its Create complete path to store in server.  
+                        string fullpath = UploadPath + FileName;
 
-                    //Its Create complete path to store in server.  
-                    string fullpath = UploadPath + FileName;
-
-                    //To copy and save file into server.  
-                    file_vn.SaveAs(fullpath);
+                        //To copy and save file into server.  
+                        file_vn.SaveAs(fullpath);
+                    }
+                    catch (Exception ex)
+                    {
+                        FileName = "";
+                        //ghi log
+                    }
                 }
 
 
@@ -203,30 +244,41 @@ namespace TraCuuBMT.Controllers
                         }
                         bieuThue.tenBieuThue = tenBieuThue;
                         bieuThue.description = description;
-                        bieuThue.hsCode = hsCode;
-                        bieuThue.bieuThue1 = bieuThue1;
-                        bieuThue.thueSuat = double.Parse(thueSuat);
+                        bieuThue.HS_CODE = HS_CODE;
                         bieuThue.note = note;
-                        bieuThue.unit = unit;
+                        bieuThue.DVT_SL2 = DVT_SL2;
+                        bieuThue.Ten_Hanghoa_VN = Ten_Hanghoa_VN;
+                        bieuThue.B01 = B01;
+                        bieuThue.B02 = B02;
+                        bieuThue.B03 = B03;
+                        bieuThue.B04 = B04;
+                        bieuThue.B05 = B05;
+                        bieuThue.B06 = B06;
+                        bieuThue.B07 = B07;
+                        bieuThue.B08 = B08;
+                        bieuThue.B09 = B09;
+                        bieuThue.B10 = B10;
+                        bieuThue.B11 = B11;
+                        bieuThue.B12 = B12;
+                        bieuThue.B13 = B13;
+                        bieuThue.B14 = B14;
+                        bieuThue.B15 = B15;
+                        bieuThue.B16 = B16;
+                        bieuThue.B17 = B17;
+                        bieuThue.B18 = B18;
+                        bieuThue.B19 = B19;
+                        bieuThue.B20 = B20;
+                        bieuThue.B21 = B21;
+                        bieuThue.B22 = B22;
+                        bieuThue.B23 = B23;
+                        bieuThue.B24 = B24;
+                        bieuThue.B25 = B25;
+                        bieuThue.B30 = B30;
+                        bieuThue.B61 = B61;
+                        bieuThue.B99 = B99;
 
-                        if (file_vn?.ContentLength != 0)
-                        {
-                            string FileName = Path.GetFileNameWithoutExtension(file_vn.FileName);
-
-                            //To Get File Extension  
-                            string FileExtension = Path.GetExtension(file_vn.FileName);
-
-                            //Add Current Date To Attached File Name  
-                            FileName = "BieuThue_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
-
-                            //Get Upload path from Web.Config file AppSettings.  
-                            string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["BieuThuePath"].ToString());
-
-                            //Its Create complete path to store in server.  
-                            string fullpath = UploadPath + FileName;
-
-                            //To copy and save file into server.  
-                            file_vn.SaveAs(fullpath);
+                        if(!string.IsNullOrEmpty(FileName)){
+                            bieuThue.link_file_vn = FileName;
                         }
 
                         db.SaveChanges();
@@ -251,33 +303,73 @@ namespace TraCuuBMT.Controllers
             //validate
             string tenBieuThue = form["tenBieuThue"];
             string description = form["description"];
-            string hsCode = form["hsCode"];
-            string bieuThue1 = form["bieuThue1"];
-            string thueSuat = form["thueSuat"];
+            string HS_CODE = form["HS_CODE"];
             string note = form["note"];
-            string unit = form["unit"];
+            string DVT_SL2 = form["DVT_SL2"];
+            string Ten_Hanghoa_VN = form["Ten_Hanghoa_VN"];
+            string Ten_Hanghoa_EN = form["Ten_Hanghoa_EN"];
+            double B01 = Util.ParseStringToFloat(form["B01"] ?? "");
+            double B02 = Util.ParseStringToFloat(form["B02"] ?? "");
+            double B03 = Util.ParseStringToFloat(form["B03"] ?? "");
+            double B04 = Util.ParseStringToFloat(form["B04"] ?? "");
+            double B05 = Util.ParseStringToFloat(form["B05"] ?? "");
+            double B06 = Util.ParseStringToFloat(form["B06"] ?? "");
+            double B07 = Util.ParseStringToFloat(form["B07"] ?? "");
+            double B08 = Util.ParseStringToFloat(form["B08"] ?? "");
+            double B09 = Util.ParseStringToFloat(form["B09"] ?? "");
+            double B10 = Util.ParseStringToFloat(form["B10"] ?? "");
+            double B11 = Util.ParseStringToFloat(form["B11"] ?? "");
+            double B12 = Util.ParseStringToFloat(form["B12"] ?? "");
+            double B13 = Util.ParseStringToFloat(form["B13"] ?? "");
+            double B14 = Util.ParseStringToFloat(form["B14"] ?? "");
+            double B15 = Util.ParseStringToFloat(form["B15"] ?? "");
+            double B16 = Util.ParseStringToFloat(form["B16"] ?? "");
+            double B17 = Util.ParseStringToFloat(form["B17"] ?? "");
+            double B18 = Util.ParseStringToFloat(form["B18"] ?? "");
+            double B19 = Util.ParseStringToFloat(form["B19"] ?? "");
+            double B20 = Util.ParseStringToFloat(form["B20"] ?? "");
+            double B21 = Util.ParseStringToFloat(form["B21"] ?? "");
+            double B22 = Util.ParseStringToFloat(form["B22"] ?? "");
+            double B23 = Util.ParseStringToFloat(form["B23"] ?? "");
+            double B24 = Util.ParseStringToFloat(form["B24"] ?? "");
+            double B25 = Util.ParseStringToFloat(form["B25"] ?? "");
+            double B30 = Util.ParseStringToFloat(form["B30"] ?? "");
+            double B61 = Util.ParseStringToFloat(form["B61"] ?? "");
+            double B99 = Util.ParseStringToFloat(form["B99"] ?? "");
             string statusString = form["status"] ?? "";
 
-            string FileName = Path.GetFileNameWithoutExtension(file_vn.FileName);
-
-            //To Get File Extension  
-            string FileExtension = Path.GetExtension(file_vn.FileName);
-
-            //Add Current Date To Attached File Name  
-            FileName = "BieuThue_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
-
-            //Get Upload path from Web.Config file AppSettings.  
-            string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["BieuThuePath"].ToString());
-            //string UploadPath = Server.MapPath("./") + ConfigurationManager.AppSettings["BieuThuePath"].ToString();
-            if (!Directory.Exists(UploadPath))
+            string FileName = "";
+            if(file_vn != null && !string.IsNullOrEmpty(file_vn.FileName))
             {
-                Directory.CreateDirectory(UploadPath);
-            }
-            //Its Create complete path to store in server.  
-            string fullpath = UploadPath + FileName;
+                try
+                {
+                    FileName = Path.GetFileNameWithoutExtension(file_vn.FileName);
 
-            //To copy and save file into server.  
-            file_vn.SaveAs(fullpath);
+                    //To Get File Extension  
+                    string FileExtension = Path.GetExtension(file_vn.FileName);
+
+                    //Add Current Date To Attached File Name  
+                    FileName = "BieuThue_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
+
+                    //Get Upload path from Web.Config file AppSettings.  
+                    string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["BieuThuePath"].ToString());
+                    //string UploadPath = Server.MapPath("./") + ConfigurationManager.AppSettings["BieuThuePath"].ToString();
+                    if (!Directory.Exists(UploadPath))
+                    {
+                        Directory.CreateDirectory(UploadPath);
+                    }
+                    //Its Create complete path to store in server.  
+                    string fullpath = UploadPath + FileName;
+
+                    //To copy and save file into server.  
+                    file_vn.SaveAs(fullpath);
+                }
+                catch(Exception ex)
+                {
+                    //ghi log
+                }
+            }
+            
 
 
             using (var db = new TraCuuBMTEntities())
@@ -297,13 +389,41 @@ namespace TraCuuBMT.Controllers
                 item.createDate = DateTime.Now;
                 item.description = description;
                 item.tenBieuThue = tenBieuThue;
-                item.hsCode = hsCode;
-                item.bieuThue1 = bieuThue1;
-                item.thueSuat = double.Parse(thueSuat);
+                item.HS_CODE = HS_CODE;
                 item.note = note;
                 item.link_file_vn = FileName;
+                item.Ten_Hanghoa_EN = Ten_Hanghoa_EN;
+                item.Ten_Hanghoa_VN = Ten_Hanghoa_VN;
                 item.creator = "";
-                item.unit = unit;
+                item.B01 = B01;
+                item.B02 = B02;
+                item.B03 = B03;
+                item.B04 = B04;
+                item.B05 = B05;
+                item.B06 = B06;
+                item.B07 = B07;
+                item.B08 = B08;
+                item.B09 = B09;
+                item.B10 = B10;
+                item.B11 = B11;
+                item.B12 = B12;
+                item.B13 = B13;
+                item.B14 = B14;
+                item.B15 = B15;
+                item.B16 = B16;
+                item.B17 = B17;
+                item.B18 = B18;
+                item.B19 = B19;
+                item.B20 = B20;
+                item.B21 = B21;
+                item.B22 = B22;
+                item.B23 = B23;
+                item.B24 = B24;
+                item.B25 = B25;
+                item.B30 = B30;
+                item.B61 = B61;
+                item.B99 = B99;
+                item.DVT_SL2 = DVT_SL2;
                 db.BieuThues.Add(item);
                 db.SaveChanges();
             }

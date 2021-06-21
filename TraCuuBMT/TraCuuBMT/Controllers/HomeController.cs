@@ -11,14 +11,29 @@ namespace TraCuuBMT.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string type = "1", string hsCode = "", string mota = "")
         {
             if (Session["userInfo"] == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            ViewBag.ListBieuThue = Util.GetListBieuThue();
+
+            ViewBag.type = type;
+            List<BieuThue> listBieuThue = Util.GetListBieuThueBy(hsCode, mota);
+            ViewBag.ListBieuThue = listBieuThue;
+            ViewBag.ListSubBieuThue = Util.GetListSubBieuThue(listBieuThue);
             ViewBag.ListKQPTPL = Util.GetListKTPTPL();
+            ViewBag.ListThueVAT = Util.GetListThueVAT();
+            if (!string.IsNullOrEmpty(hsCode))
+            {
+                ViewBag.Keyword = hsCode;
+            }
+            if (!string.IsNullOrEmpty(mota))
+            {
+                ViewBag.Keyword = mota;
+            }
+
+
 
             return View();
         }
@@ -50,7 +65,7 @@ namespace TraCuuBMT.Controllers
                 User user = (User)Session["userInfo"];
                 string toEmail = user.email;
                 KetQuaPhanTichPhanLoai item = Util.GetKQPTPLById(itemId);
-                if(item != null)
+                if (item != null)
                 {
                     if (!string.IsNullOrEmpty(item.link_file_vn))
                     {

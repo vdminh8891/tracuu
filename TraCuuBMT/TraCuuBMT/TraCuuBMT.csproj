@@ -144,6 +144,10 @@
     <Compile Include="Models\Package.cs">
       <DependentUpon>TraCuuDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubBieuThue.cs" />
+    <Compile Include="Models\ThueVAT.cs">
+      <DependentUpon>TraCuuDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TraCuuDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,6 +280,10 @@
     <Content Include="Views\Admin\CreateBieuThue.cshtml" />
     <Content Include="Views\Admin\ListKQPTPL.cshtml" />
     <Content Include="Views\Admin\CreateKQPTPL.cshtml" />
+    <Content Include="Upload\KQPTPL\KQPTPL_1622390676.PDF" />
+    <Content Include="Upload\KQPTPL\KQPTPL_1622390895.PDF" />
+    <Content Include="Upload\KQPTPL\KQPTPL_1622393396.PDF" />
+    <Content Include="Upload\KQPTPL\KQPTPL_1622476906.PDF" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

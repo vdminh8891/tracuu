@@ -12,18 +12,51 @@
           <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="createDate" Type="datetime" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
-          <Property Name="hsCode" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="description" Type="nvarchar(max)" />
-          <Property Name="unit" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="bieuThue" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="thueSuat" Type="float" Nullable="false" />
-          <Property Name="link_file_vn" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="link_file_en" Type="nvarchar" MaxLength="200" />
-          <Property Name="note" Type="nvarchar(max)" />
-          <Property Name="tenBieuThue" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="creator" Type="nvarchar" MaxLength="50" />
           <Property Name="lastEditDate" Type="datetime" />
           <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="HS_CODE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DVT_SL2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="link_file_vn" Type="nvarchar(max)" />
+          <Property Name="link_file_en" Type="nvarchar(max)" />
+          <Property Name="tenBieuThue" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Ten_Hanghoa_VN" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Ten_Hanghoa_EN" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="THUE_EXPORT" Type="float" />
+          <Property Name="THUE_BVMT" Type="float" />
+          <Property Name="THUE_TTDB" Type="float" />
+          <Property Name="THUE_TVCBPG" Type="float" />
+          <Property Name="THUE_PBDX" Type="float" />
+          <Property Name="B01" Type="float" />
+          <Property Name="B02" Type="float" />
+          <Property Name="B03" Type="float" />
+          <Property Name="B04" Type="float" />
+          <Property Name="B05" Type="float" />
+          <Property Name="B06" Type="float" />
+          <Property Name="B07" Type="float" />
+          <Property Name="B08" Type="float" />
+          <Property Name="B09" Type="float" />
+          <Property Name="B10" Type="float" />
+          <Property Name="B11" Type="float" />
+          <Property Name="B12" Type="float" />
+          <Property Name="B13" Type="float" />
+          <Property Name="B14" Type="float" />
+          <Property Name="B15" Type="float" />
+          <Property Name="B16" Type="float" />
+          <Property Name="B17" Type="float" />
+          <Property Name="B18" Type="float" />
+          <Property Name="B19" Type="float" />
+          <Property Name="B20" Type="float" />
+          <Property Name="B21" Type="float" />
+          <Property Name="B22" Type="float" />
+          <Property Name="B23" Type="float" />
+          <Property Name="B24" Type="float" />
+          <Property Name="B25" Type="float" />
+          <Property Name="B30" Type="float" />
+          <Property Name="B61" Type="float" />
+          <Property Name="B99" Type="float" />
         </EntityType>
         <EntityType Name="KetQuaPhanTichPhanLoai">
           <Key>
@@ -71,6 +104,17 @@
           <Property Name="lastEditor" Type="nvarchar" MaxLength="50" />
           <Property Name="amount" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ThueVAT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="mota" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="value" Type="float" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Transaction">
           <Key>
             <PropertyRef Name="ID" />
@@ -106,6 +150,7 @@
           <EntitySet Name="BieuThue" EntityType="Self.BieuThue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KetQuaPhanTichPhanLoai" EntityType="Self.KetQuaPhanTichPhanLoai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThueVAT" EntityType="Self.ThueVAT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -131,8 +176,9 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Packages" EntityType="TraCuuBMTModel.Package" />
           <EntitySet Name="Transactions" EntityType="TraCuuBMTModel.Transaction" />
-          <EntitySet Name="BieuThues" EntityType="TraCuuBMTModel.BieuThue" />
           <EntitySet Name="KetQuaPhanTichPhanLoais" EntityType="TraCuuBMTModel.KetQuaPhanTichPhanLoai" />
+          <EntitySet Name="ThueVATs" EntityType="TraCuuBMTModel.ThueVAT" />
+          <EntitySet Name="BieuThues" EntityType="TraCuuBMTModel.BieuThue" />
         </EntityContainer>
         <EntityType Name="Package">
           <Key>
@@ -169,26 +215,6 @@
           <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="amount" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="BieuThue">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="hsCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="bieuThue1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="thueSuat" Type="Double" Nullable="false" />
-          <Property Name="link_file_vn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="link_file_en" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tenBieuThue" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="creator" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lastEditDate" Type="DateTime" Precision="3" />
-          <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="KetQuaPhanTichPhanLoai">
           <Key>
             <PropertyRef Name="ID" />
@@ -216,6 +242,70 @@
           <Property Name="Co_Quan_YC_PTPL" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Hieu_Luc_Vanban" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ThueVAT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="mota" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="value" Type="Double" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BieuThue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastEditDate" Type="DateTime" Precision="3" />
+          <Property Name="lastEditor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HS_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DVT_SL2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="link_file_vn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link_file_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tenBieuThue" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Ten_Hanghoa_VN" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Ten_Hanghoa_EN" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="THUE_EXPORT" Type="Double" />
+          <Property Name="THUE_BVMT" Type="Double" />
+          <Property Name="THUE_TTDB" Type="Double" />
+          <Property Name="THUE_TVCBPG" Type="Double" />
+          <Property Name="THUE_PBDX" Type="Double" />
+          <Property Name="B01" Type="Double" />
+          <Property Name="B02" Type="Double" />
+          <Property Name="B03" Type="Double" />
+          <Property Name="B04" Type="Double" />
+          <Property Name="B05" Type="Double" />
+          <Property Name="B06" Type="Double" />
+          <Property Name="B07" Type="Double" />
+          <Property Name="B08" Type="Double" />
+          <Property Name="B09" Type="Double" />
+          <Property Name="B10" Type="Double" />
+          <Property Name="B11" Type="Double" />
+          <Property Name="B12" Type="Double" />
+          <Property Name="B13" Type="Double" />
+          <Property Name="B14" Type="Double" />
+          <Property Name="B15" Type="Double" />
+          <Property Name="B16" Type="Double" />
+          <Property Name="B17" Type="Double" />
+          <Property Name="B18" Type="Double" />
+          <Property Name="B19" Type="Double" />
+          <Property Name="B20" Type="Double" />
+          <Property Name="B21" Type="Double" />
+          <Property Name="B22" Type="Double" />
+          <Property Name="B23" Type="Double" />
+          <Property Name="B24" Type="Double" />
+          <Property Name="B25" Type="Double" />
+          <Property Name="B30" Type="Double" />
+          <Property Name="B61" Type="Double" />
+          <Property Name="B99" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -275,27 +365,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BieuThues">
-            <EntityTypeMapping TypeName="TraCuuBMTModel.BieuThue">
-              <MappingFragment StoreEntitySet="BieuThue">
-                <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
-                <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
-                <ScalarProperty Name="creator" ColumnName="creator" />
-                <ScalarProperty Name="tenBieuThue" ColumnName="tenBieuThue" />
-                <ScalarProperty Name="note" ColumnName="note" />
-                <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
-                <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
-                <ScalarProperty Name="thueSuat" ColumnName="thueSuat" />
-                <ScalarProperty Name="bieuThue1" ColumnName="bieuThue" />
-                <ScalarProperty Name="unit" ColumnName="unit" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="hsCode" ColumnName="hsCode" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="KetQuaPhanTichPhanLoais">
             <EntityTypeMapping TypeName="TraCuuBMTModel.KetQuaPhanTichPhanLoai">
               <MappingFragment StoreEntitySet="KetQuaPhanTichPhanLoai">
@@ -316,6 +385,72 @@
                 <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
                 <ScalarProperty Name="Mota_Dnkhaibao" ColumnName="Mota_Dnkhaibao" />
                 <ScalarProperty Name="hsCode" ColumnName="hsCode" />
+                <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
+                <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThueVATs">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.ThueVAT">
+              <MappingFragment StoreEntitySet="ThueVAT">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="mota" ColumnName="mota" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BieuThues">
+            <EntityTypeMapping TypeName="TraCuuBMTModel.BieuThue">
+              <MappingFragment StoreEntitySet="BieuThue">
+                <ScalarProperty Name="B99" ColumnName="B99" />
+                <ScalarProperty Name="B61" ColumnName="B61" />
+                <ScalarProperty Name="B30" ColumnName="B30" />
+                <ScalarProperty Name="B25" ColumnName="B25" />
+                <ScalarProperty Name="B24" ColumnName="B24" />
+                <ScalarProperty Name="B23" ColumnName="B23" />
+                <ScalarProperty Name="B22" ColumnName="B22" />
+                <ScalarProperty Name="B21" ColumnName="B21" />
+                <ScalarProperty Name="B20" ColumnName="B20" />
+                <ScalarProperty Name="B19" ColumnName="B19" />
+                <ScalarProperty Name="B18" ColumnName="B18" />
+                <ScalarProperty Name="B17" ColumnName="B17" />
+                <ScalarProperty Name="B16" ColumnName="B16" />
+                <ScalarProperty Name="B15" ColumnName="B15" />
+                <ScalarProperty Name="B14" ColumnName="B14" />
+                <ScalarProperty Name="B13" ColumnName="B13" />
+                <ScalarProperty Name="B12" ColumnName="B12" />
+                <ScalarProperty Name="B11" ColumnName="B11" />
+                <ScalarProperty Name="B10" ColumnName="B10" />
+                <ScalarProperty Name="B09" ColumnName="B09" />
+                <ScalarProperty Name="B08" ColumnName="B08" />
+                <ScalarProperty Name="B07" ColumnName="B07" />
+                <ScalarProperty Name="B06" ColumnName="B06" />
+                <ScalarProperty Name="B05" ColumnName="B05" />
+                <ScalarProperty Name="B04" ColumnName="B04" />
+                <ScalarProperty Name="B03" ColumnName="B03" />
+                <ScalarProperty Name="B02" ColumnName="B02" />
+                <ScalarProperty Name="B01" ColumnName="B01" />
+                <ScalarProperty Name="THUE_PBDX" ColumnName="THUE_PBDX" />
+                <ScalarProperty Name="THUE_TVCBPG" ColumnName="THUE_TVCBPG" />
+                <ScalarProperty Name="THUE_TTDB" ColumnName="THUE_TTDB" />
+                <ScalarProperty Name="THUE_BVMT" ColumnName="THUE_BVMT" />
+                <ScalarProperty Name="THUE_EXPORT" ColumnName="THUE_EXPORT" />
+                <ScalarProperty Name="Ten_Hanghoa_EN" ColumnName="Ten_Hanghoa_EN" />
+                <ScalarProperty Name="Ten_Hanghoa_VN" ColumnName="Ten_Hanghoa_VN" />
+                <ScalarProperty Name="tenBieuThue" ColumnName="tenBieuThue" />
+                <ScalarProperty Name="link_file_en" ColumnName="link_file_en" />
+                <ScalarProperty Name="link_file_vn" ColumnName="link_file_vn" />
+                <ScalarProperty Name="DVT_SL2" ColumnName="DVT_SL2" />
+                <ScalarProperty Name="HS_CODE" ColumnName="HS_CODE" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="lastEditor" ColumnName="lastEditor" />
                 <ScalarProperty Name="lastEditDate" ColumnName="lastEditDate" />
                 <ScalarProperty Name="creator" ColumnName="creator" />
