@@ -39,41 +39,26 @@
                         <div class="card-body p-4">
 
                             <div class="text-center w-75 m-auto">
-                                <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Đăng nhập</h4>
+                                <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Đăng nhập Quản trị</h4>
                                 <p class="text-muted">Vui lòng nhập thông tin để đăng nhập.</p>
-                                <p class="mb-4"><a href="@Url.Action("Register", "Account")" style="text-decoration:none">Tạo tài khoản</a></p>
                             </div>
 
-                            <form method="post" action="@Url.Action("Login", "Account")">
+                            <form method="post" action="@Url.Action("LoginAdmin", "Account")">
+                                <input type="text" id="returnUrl" name="returnUrl" readonly hidden value="@ViewBag.returnUrl"/>
                                 <div class="form-group">
                                     <label for="txtPhone">Điện thoại</label>
-                                    <input class="form-control" type="text" name="txtPhone" id="txtPhone" required="required" placeholder="Số điện thoại" value="0918222222">
+                                    <input class="form-control" type="text" name="txtPhone" id="txtPhone" required="required" placeholder="Số điện thoại" value="123123">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtEmail">Email</label>
-                                    <input class="form-control" type="text" name="txtEmail" id="txtEmail" required="required" placeholder="Email" value="vdminh8891@gmail.com">
+                                    <input class="form-control" type="text" name="txtEmail" id="txtEmail" required="required" placeholder="Email" value="admin@gmail.com">
                                 </div>
 
                                 <div class="form-group">
-                                    <a href="pages-recoverpw.html" class="text-muted float-right"><small>Quên mật khẩu?</small></a>
                                     <label for="password">Mật khẩu</label>
-                                    <input class="form-control" type="password" required="" name="txtPassword" id="txtPassword" placeholder="Mật khẩu" value="normal">
+                                    <input class="form-control" type="password" required="" name="txtPassword" id="txtPassword" placeholder="Mật khẩu" value="123">
                                 </div>
-
-                                @if (TempData["WarningMessage"] != null)
-                                {
-                                    <div class="alert alert-warning">
-                                        <strong>Warning!</strong> @TempData["WarningMessage"].ToString()
-                                    </div>
-                                }
-
-                                @*<div class="form-group mb-3">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
-                <label class="custom-control-label" for="checkbox-signin">Remember me</label>
-            </div>
-        </div>*@
 
                                 <div class="form-group mb-0 text-center">
                                     <button class="btn btn-primary" type="submit"> Đăng nhập </button>
@@ -82,13 +67,7 @@
                             </form>
                         </div> <!-- end card-body -->
                     </div>
-                    <!-- end card -->
-                    @*<div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <p class="text-muted">Don't have an account? <a href="pages-register.html" class="text-muted ml-1"><b>Sign Up</b></a></p>
-                            </div>
-                        </div>*@
-                    <!-- end row -->
+
 
                 </div> <!-- end col -->
             </div>

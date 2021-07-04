@@ -16,14 +16,76 @@ namespace TraCuuBMT.Controllers
             return View();
         }
 
-        public ActionResult Login()
-        {
-            return View();
-        }        
-        
         public ActionResult Register()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ChangePassword(string userId, string newPassword, string confirmNewPassword)
+        {
+            string result = "0";
+            string message = "";
+            string detailMessage = "";
+            if(Session["userInfo"] != null)
+            {
+                try
+                {
+                    User user = (User)Session["userInfo"];
+
+                    using (var db = new TraCuuBMTEntities())
+                    {
+                        var userTemp = db.Users.Where(w => w.ID == userId && w.status > -1).FirstOrDefault();
+                        if (userTemp != null && userTemp.ID == user.ID)
+                        {
+                            if(!string.IsNullOrEmpty(newPassword) && !string.IsNullOrEmpty(confirmNewPassword))
+                            {
+                                if(newPassword == confirmNewPassword)
+                                {
+                                    userTemp.password = Util.CreateMD5(newPassword);
+                                    db.SaveChanges();
+                                    result = "1";
+                                    message = "Đổi mật khẩu thành công";
+                                }
+                                else
+                                {
+                                    result = "-1";
+                                    message = "Mật khẩu không khớp";
+                                }
+                            }
+                            else
+                            {
+                                result = "-1";
+                                message = "Mật khẩu không thể rỗng";
+                            }
+                        }
+                        else
+                        {
+                            result = "-1";
+                            message = "Phiên đăng nhập không hợp lệ";
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    result = "-3";
+                    message = "Lỗi hệ thống";
+                    detailMessage = ex.ToString();
+                }
+            }
+            else
+            {
+                result = "-1";
+                message = "Phiên đăng nhập không hợp lệ";
+            }
+
+            return Json(new {
+                result = result,
+                message = message,
+                detailMessage = detailMessage
+            });
         }
 
         [HttpPost]
@@ -68,29 +130,69 @@ namespace TraCuuBMT.Controllers
             }
             return View();
         }
-
+        public ActionResult Login()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult Login(string txtPhone, string txtEmail, string txtPassword)
         {
             using (var db = new TraCuuBMTEntities())
             {
                 string md5Password = Util.CreateMD5(txtPassword);
-                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.status > -1).FirstOrDefault();
+                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.role == 1 && w.status > -1).FirstOrDefault();
                 if (user != null)
                 {
                     Session["userInfo"] = user;
+                    TempData.Remove("WarningMessage");
                     return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["WarningMessage"] = "Thông tin đăng nhập không đúng";
                 }
             }
                 return View();
         }
 
+        public ActionResult LoginAdmin(string returnUrl)
+        {
+            ViewBag.returnUrl = returnUrl;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult LoginAdmin(string txtPhone, string txtEmail, string txtPassword, string returnUrl)
+        {
+            using (var db = new TraCuuBMTEntities())
+            {
+                string md5Password = Util.CreateMD5(txtPassword);
+                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.status > -1 && w.role == 2).FirstOrDefault();
+                if (user != null)
+                {
+                    Session["userInfo"] = user;
+
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+            return View();
+        }
 
         public ActionResult Logout()
         {
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult LogoutAdmin()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("LoginAdmin", "Account");
         }
 
 

@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    User user = (User)ViewBag.User;
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Edit Admin User</h3>
+    <div class="contentAdmin">
+        <form action="@Url.Action("EditAdminUser","Admin")" method="post">
+            <input type="text" class="form-control" id="userId" name="userId" value="@user.ID" hidden readonly>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" value="@user.email" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="@user.phone" readonly>
+            </div>
+            <div class="form-group">
+                <label for="createDate">Ngày tạo:</label>
+                <input type="text" class="form-control" id="createDate" name="createDate" readonly value="@user.createDate">
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    @foreach (GeneralStatus item in Util.ListGeneralStatus)
+                    {
+                        if (item.StatusValue == user.status)
+                        {
+                            <option value="@item.StatusValue" selected>@item.StatusName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.StatusValue">@item.StatusName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="TwoButtonAdmin">
+                <a href="@Url.Action("ListAdminUser","Admin")" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

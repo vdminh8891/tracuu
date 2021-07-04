@@ -17,12 +17,20 @@ namespace TraCuuBMT.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             return View();
         }
 
+
         public ActionResult ListKQPTPL()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             List<KetQuaPhanTichPhanLoai> listKQPTPL = new List<KetQuaPhanTichPhanLoai>();
             using (var db = new TraCuuBMTEntities())
             {
@@ -35,12 +43,20 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateKQPTPL()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateKQPTPL(FormCollection form, HttpPostedFileBase file_vn)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             //validate
             string hsCode = form["hsCode"];
             string unit = form["unit"];
@@ -60,26 +76,29 @@ namespace TraCuuBMT.Controllers
                            System.Globalization.CultureInfo.InvariantCulture);
             string statusString = form["status"] ?? "";
 
-            string FileName = Path.GetFileNameWithoutExtension(file_vn.FileName);
-
-            //To Get File Extension  
-            string FileExtension = Path.GetExtension(file_vn.FileName);
-
-            //Add Current Date To Attached File Name  
-            FileName = "KQPTPL_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
-
-            //Get Upload path from Web.Config file AppSettings.  
-            string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["KQPTPLPath"].ToString());
-            //string UploadPath = Server.MapPath("./") + ConfigurationManager.AppSettings["BieuThuePath"].ToString();
-            if (!Directory.Exists(UploadPath))
+            string FileName = "";
+            if (file_vn != null && file_vn?.ContentLength != 0)
             {
-                Directory.CreateDirectory(UploadPath);
-            }
-            //Its Create complete path to store in server.  
-            string fullpath = UploadPath + FileName;
+                //To Get File Extension  
+                string FileExtension = Path.GetExtension(file_vn.FileName);
 
-            //To copy and save file into server.  
-            file_vn.SaveAs(fullpath);
+                //Add Current Date To Attached File Name  
+                FileName = "KQPTPL_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
+
+                //Get Upload path from Web.Config file AppSettings.  
+                string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["KQPTPLPath"].ToString());
+                //string UploadPath = Server.MapPath("./") + ConfigurationManager.AppSettings["BieuThuePath"].ToString();
+                if (!Directory.Exists(UploadPath))
+                {
+                    Directory.CreateDirectory(UploadPath);
+                }
+                //Its Create complete path to store in server.  
+                string fullpath = UploadPath + FileName;
+
+                //To copy and save file into server.  
+                file_vn.SaveAs(fullpath);
+            }
+                
 
 
             using (var db = new TraCuuBMTEntities())
@@ -121,6 +140,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListBieuThue()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             List<BieuThue> listBieuThue = new List<BieuThue>();
             using (var db = new TraCuuBMTEntities())
             {
@@ -135,6 +158,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditBieuThue(string id)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 BieuThue item = db.BieuThues.Where(w => w.status > 0 && w.ID == id).FirstOrDefault();
@@ -154,6 +181,10 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditBieuThue(FormCollection form, HttpPostedFileBase file_vn)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 string bieuThueId = form["bieuThueId"] ?? "";
@@ -294,12 +325,20 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateBieuThue()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateBieuThue(FormCollection form, HttpPostedFileBase file_vn)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             //validate
             string tenBieuThue = form["tenBieuThue"];
             string description = form["description"];
@@ -433,6 +472,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult TransactionUser()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 ViewBag.ListUser = db.Users.Where(w => w.status >= 0).ToList();
@@ -444,6 +487,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult TransactionStatistic()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 ViewBag.ListTransaction = db.Transactions.Where(w => w.status >= 0).OrderByDescending(w => w.createDate).ToList();
@@ -454,6 +501,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateTransaction()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 ViewBag.ListUser = db.Users.Where(w => w.status >= 0).ToList();
@@ -505,6 +556,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditTransaction(string id)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 Transaction item = db.Transactions.Where(w => w.status >= 0 && w.ID == id).FirstOrDefault();
@@ -525,6 +580,10 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditTransaction(FormCollection form)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 string transactionId = form["transactionId"] ?? "";
@@ -560,6 +619,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListTransaction()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             List<Transaction> listItem = new List<Transaction>();
             using (var db = new TraCuuBMTEntities())
             {
@@ -573,12 +636,20 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreatePackage()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreatePackage(FormCollection form)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             //validate
             string email = form["email"];
             string phone = form["phone"];
@@ -615,6 +686,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListPackage()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             List<Package> listPackage = new List<Package>();
             using (var db = new TraCuuBMTEntities())
             {
@@ -626,6 +701,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListNormalUser()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             List<User> listUser = new List<User>();
             using (var db = new TraCuuBMTEntities())
             {
@@ -637,6 +716,10 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditUser(string id)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 User user = db.Users.Where(w => w.status > 0 && w.ID == id).FirstOrDefault();
@@ -657,6 +740,10 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditUser(FormCollection form)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             using (var db = new TraCuuBMTEntities())
             {
                 string userId = form["userId"] ?? "";
@@ -693,12 +780,20 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateNormalUser()
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateNormalUser(FormCollection form)
         {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             //validate
             string email = form["email"];
             string phone = form["phone"];
@@ -722,7 +817,7 @@ namespace TraCuuBMT.Controllers
                 user.createDate = DateTime.Now;
                 user.email = email;
                 user.phone = phone;
-                user.password = password;
+                user.password = Util.CreateMD5(password);
                 user.role = 1;
                 user.type = 1;
                 user.username = email;
@@ -731,6 +826,164 @@ namespace TraCuuBMT.Controllers
             }
             TempData["SuccessMessage"] = "Tạo mới thành công!";
             return RedirectToAction("ListNormalUser", "Admin");
+        }
+
+
+        public ActionResult ListAdminUser()
+        {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            List<User> listUser = new List<User>();
+            using (var db = new TraCuuBMTEntities())
+            {
+                listUser = db.Users.Where(w => w.status > 0 && w.role == 2).ToList();
+            }
+            ViewBag.ListUser = listUser;
+            return View();
+        }
+        public ActionResult CreateAdminUser()
+        {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateAdminUser(FormCollection form)
+        {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            //validate
+            string email = form["email"];
+            string phone = form["phone"];
+            string statusString = form["status"] ?? "";
+            string password = form["password"];
+
+            using (var db = new TraCuuBMTEntities())
+            {
+                User user = new User();
+                user.ID = Util.GenerateID("user");
+                int temp = Util.ParseStringToInt(statusString);
+                if (temp > -99)
+                {
+                    user.status = temp;
+                }
+                else
+                {
+                    user.status = 1;
+                }
+
+                user.createDate = DateTime.Now;
+                user.email = email;
+                user.phone = phone;
+                user.password = Util.CreateMD5(password);
+                user.role = 2; //admin
+                user.type = 1; //admin type
+                user.username = email;
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
+            TempData["SuccessMessage"] = "Tạo mới thành công!";
+            return RedirectToAction("ListAdminUser", "Admin");
+        }
+
+        public ActionResult EditAdminUser(string id)
+        {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            using (var db = new TraCuuBMTEntities())
+            {
+                User user = db.Users.Where(w => w.status > 0 && w.ID == id).FirstOrDefault();
+                if (user != null)
+                {
+                    ViewBag.User = user;
+                    return View();
+                }
+                else
+                {
+                    TempData["WarningMessage"] = "Không tìm thấy user này";
+                    return RedirectToAction("ListAdminUser", "Admin");
+                }
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult EditAdminUser(FormCollection form)
+        {
+            if (!CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            using (var db = new TraCuuBMTEntities())
+            {
+                string userId = form["userId"] ?? "";
+                string email = form["email"];
+                string phone = form["phone"];
+                string statusString = form["status"] ?? "";
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    User user = db.Users.Where(w => w.status > 0 && w.ID == userId).FirstOrDefault();
+                    if (user != null)
+                    {
+                        int temp = Util.ParseStringToInt(statusString);
+                        if (temp > -99)
+                        {
+                            user.status = temp;
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Lỗi dữ liệu!";
+                            return RedirectToAction("ListAdminUser", "Admin");
+                        }
+
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Chỉnh sửa thành công!";
+                        return RedirectToAction("ListAdminUser", "Admin");
+                    }
+
+                }
+            }
+            TempData["WarningMessage"] = "Không tìm thấy user này";
+            return RedirectToAction("ListNormalUser", "Admin");
+        }
+
+        private bool CheckAuthenAndAuthor(int role)
+        {
+            bool result = false;
+            if(Session["userInfo"] != null)
+            {
+                try
+                {
+                    User currentUser = (User)Session["userInfo"];
+                    using(var db = new TraCuuBMTEntities())
+                    {
+                        if (currentUser != null)
+                        {
+                            var temp = db.Users.Where(w => w.status > 0 && w.ID == currentUser.ID && w.role == role).FirstOrDefault();
+                            if(temp != null)
+                            {
+                                result = true;
+                            }
+                        }
+                    }
+
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+
+            return result;
         }
     }
 }

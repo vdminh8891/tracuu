@@ -111,7 +111,7 @@
                                         <a href="javascript:void(0)" class="btn btn-default btn-flat"><i class="fa fa-user-circle"></i>  Thông tin cá nhân</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                        <a href="@Url.Action("LogoutAdmin", "Account")" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Đăng xuất</a>
                                     </div>
                                 </li>
                             </ul>
@@ -147,8 +147,8 @@
                         <ul class="treeview-menu">
                             <li><a href="@Url.Action("ListNormalUser", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách user thường</a></li>
                             <li><a href="@Url.Action("CreateNormalUser", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới user thường</a></li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-arrow-circle-right"></i> Danh sách user admin</a></li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-arrow-circle-right"></i> Tạo mới user admin</a></li>
+                            <li><a href="@Url.Action("ListAdminUser", "Admin")"><i class="fa fa-arrow-circle-right"></i> Danh sách user admin</a></li>
+                            <li><a href="@Url.Action("CreateAdminUser", "Admin")"><i class="fa fa-arrow-circle-right"></i> Tạo mới user admin</a></li>
                         </ul>
                     </li>
                     <li class="treeview">

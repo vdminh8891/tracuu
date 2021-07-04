@@ -1,6 +1,6 @@
 ﻿@using TraCuuBMT.Models
 @{
-    User user = (User) Session["userInfo"];
+    User user = (User)Session["userInfo"];
 }
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="rowProfile">
                         <div><i class="fas fa-lock"></i></div>
-                        <div>Đổi mật khẩu</div>
+                        <div style="cursor: pointer;" data-toggle="modal" data-target="#changePassModal">Đổi mật khẩu</div>
                     </div>
                     <div class="rowProfile">
                         <div><i class="fa fa-download"></i></div>
@@ -64,7 +64,34 @@
         </div>
     </div>
 
-    
+    <div class="modal" id="changePassModal" tabindex="-1" role="dialog">
+        <input hidden="hidden" id="userId" type="text" value="@user.ID" />
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đổi mật khẩu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newPassword">Mật khẩu mới (*):</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Xác nhận mật khẩu mới (*):</label>
+                        <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="confirmChangePass" class="btn btn-primary">Xác nhận</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -98,9 +125,46 @@
     <div class="footer">
         <p>&copy; @DateTime.Now.Year - Tra cứu Biểu mẫu thuế</p>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#confirmChangePass').click(function () {
+                var newPassword = $('#newPassword').val();
+                var confirmNewPassword = $('#confirmNewPassword').val();
 
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@Scripts.Render("~/bundles/bootstrap")*@
-    @*@RenderSection("scripts", required: false)*@
+                if (!newPassword || !confirmNewPassword) {
+                    alert('Vui lòng nhập đầy đủ các trường bắt buộc!');
+                } else {
+                    if (newPassword != confirmNewPassword) {
+                        alert('Mật khẩu xác nhận không khớp!');
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("ChangePassword", "Account")',
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                userId: $('#userId').val(),
+                                newPassword: newPassword,
+                                confirmNewPassword: confirmNewPassword
+                            }),
+                            dataType: "json",
+                            success: function (result) {
+                                jsonResult = JSON.parse(JSON.stringify(result));
+                                alert(jsonResult.message);
+                                $('#changePassModal').modal('hide');
+ 
+                            },
+                            error: function () {
+                                alert('Lỗi hệ thống!');;
+                            }
+                        });
+                    }
+
+                }
+
+
+            });
+        });
+    </script>
 </body>
+
 </html>

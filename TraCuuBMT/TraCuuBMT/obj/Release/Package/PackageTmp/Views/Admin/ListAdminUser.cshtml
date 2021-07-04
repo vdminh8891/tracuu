@@ -1,0 +1,45 @@
+﻿@using TraCuuBMT.Models;
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<User> listUser = (List<User>)ViewBag.ListUser;
+    var index = 0;
+
+}
+
+<div>
+    <h3>Danh sách user admin</h3>
+    <div class="contentAdmin">
+        <table class="table table-bordered tableAdmin table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (User user in listUser)
+                {
+                    index++;
+                    string checkString = user.status == 1 ? "checked" : "";
+
+                    <tr>
+                        <th scope="row">@index</th>
+                        <td style="text-align:left">@user.email</td>
+                        <td>@user.phone</td>
+                        <td>
+                            <input type="checkbox" value="" @checkString>
+                        </td>
+                        <td>@user.createDate</td>
+                        <td>
+                            <a href="@Url.Action("EditAdminUser","Admin", new { id= @user.ID})" class="btn btn-warning">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

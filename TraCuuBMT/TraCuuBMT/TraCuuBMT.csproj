@@ -284,6 +284,10 @@
     <Content Include="Upload\KQPTPL\KQPTPL_1622390895.PDF" />
     <Content Include="Upload\KQPTPL\KQPTPL_1622393396.PDF" />
     <Content Include="Upload\KQPTPL\KQPTPL_1622476906.PDF" />
+    <Content Include="Views\Account\LoginAdmin.cshtml" />
+    <Content Include="Views\Admin\CreateAdminUser.cshtml" />
+    <Content Include="Views\Admin\ListAdminUser.cshtml" />
+    <Content Include="Views\Admin\EditAdminUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
