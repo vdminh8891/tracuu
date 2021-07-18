@@ -13,17 +13,21 @@ namespace TraCuuBMT.Controllers
     {
         public ActionResult Index(string type = "1", string hsCode = "", string mota = "")
         {
-            if (Session["userInfo"] == null)
+            if (!Util.CheckAuthenAndAuthor(1))
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
             }
 
             ViewBag.type = type;
-            List<BieuThue> listBieuThue = Util.GetListBieuThueBy(hsCode, mota);
+            //danh sách ban đầu của tất cả các loại
+            //bieu thue
+            ViewBag.ListThueVAT = Util.GetListThueVAT();
+            List<BieuThue> listBieuThue = Util.GetListBieuThueBy("", "");
             ViewBag.ListBieuThue = listBieuThue;
             ViewBag.ListSubBieuThue = Util.GetListSubBieuThue(listBieuThue);
+
+            //kết quả phân tích phân loại
             ViewBag.ListKQPTPL = Util.GetListKTPTPL();
-            ViewBag.ListThueVAT = Util.GetListThueVAT();
             if (!string.IsNullOrEmpty(hsCode))
             {
                 ViewBag.Keyword = hsCode;
@@ -33,8 +37,32 @@ namespace TraCuuBMT.Controllers
                 ViewBag.Keyword = mota;
             }
 
+            //search theo loại
+            switch (type)
+            {
+                case "1":
+                    ViewBag.ListThueVAT = Util.GetListThueVAT();
+                    List<BieuThue> listBieuThueType1 = Util.GetListBieuThueBy(hsCode, mota);
+                    ViewBag.ListBieuThue = listBieuThueType1;
+                    ViewBag.ListSubBieuThue = Util.GetListSubBieuThue(listBieuThueType1);
+                    break;
 
+                case "2":
+                    ViewBag.ListKQPTPL = Util.GetListKTPTPLBy(hsCode, mota);
+                    break;
+            }
 
+            return View();
+        }
+
+        public ActionResult RegisterMore()
+        {
+            if (!Util.CheckAuthenAndAuthor(1))
+            {
+                return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+
+            ViewBag.ListPackage = Util.GetListPackage();
             return View();
         }
 

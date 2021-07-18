@@ -15,9 +15,11 @@ namespace TraCuuBMT.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        private AccountController Acc = new AccountController();
+
         public ActionResult Index()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -27,7 +29,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListKQPTPL()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -41,9 +43,135 @@ namespace TraCuuBMT.Controllers
             return View();
         }
 
+        public ActionResult EditKQPTPL(string id)
+        {
+            if (!Util.CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+
+            using (var db = new TraCuuBMTEntities())
+            {
+                KetQuaPhanTichPhanLoai item = db.KetQuaPhanTichPhanLoais.Where(w => w.status > 0 && w.ID == id).FirstOrDefault();
+                if (item != null)
+                {
+                    ViewBag.KetQuaPhanTichPhanLoai = item;
+                    ViewBag.KQPTPLPath = Request.Url.GetLeftPart(UriPartial.Authority) + ConfigurationManager.AppSettings["KQPTPLPath"].ToString();
+                    return View();
+                }
+                else
+                {
+                    TempData["WarningMessage"] = "Không tìm thấy Kết quả phân tích phân loại này";
+                    return RedirectToAction("ListKQPTPL", "Admin");
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditKQPTPL(FormCollection form, HttpPostedFileBase file_vn)
+        {
+            if (!Util.CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            //validate
+            string kqptplId = form["kqptplId"] ?? "";
+            string hsCode = form["hsCode"];
+            string unit = form["unit"];
+            string so_Vanban = form["so_Vanban"];
+            string coQuan_PhatHanh_PTPL = form["coQuan_PhatHanh_PTPL"];
+            string mota_Dnkhaibao = form["mota_Dnkhaibao"];
+            string mota_KQPTPL = form["mota_KQPTPL"];
+            string donVi_XNK = form["donVi_XNK"];
+            string co_Quan_YC_PTPL = form["co_Quan_YC_PTPL"];
+            string toKhai_HQ = form["toKhai_HQ"];
+            string loai_Hinh = form["loai_Hinh"];
+            string Ngay_VanbanString = form["Ngay_Vanban"];
+            DateTime Ngay_Vanban = DateTime.ParseExact(Ngay_VanbanString, "MM/dd/yyyy",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+            string Ngay_Vanban_HHString = form["Ngay_Vanban_HH"];
+            DateTime Ngay_Vanban_HH = DateTime.ParseExact(Ngay_Vanban_HHString, "MM/dd/yyyy",
+                           System.Globalization.CultureInfo.InvariantCulture);
+            string statusString = form["status"] ?? "";
+
+            string FileName = "";
+            if (file_vn != null && file_vn?.ContentLength != 0)
+            {
+                //To Get File Extension  
+                string FileExtension = Path.GetExtension(file_vn.FileName);
+
+                //Add Current Date To Attached File Name  
+                FileName = "KQPTPL_" + DateTimeOffset.Now.ToUnixTimeSeconds() + FileExtension;
+
+                //Get Upload path from Web.Config file AppSettings.  
+                string UploadPath = System.Web.Hosting.HostingEnvironment.MapPath(ConfigurationManager.AppSettings["KQPTPLPath"].ToString());
+                //string UploadPath = Server.MapPath("./") + ConfigurationManager.AppSettings["BieuThuePath"].ToString();
+                if (!Directory.Exists(UploadPath))
+                {
+                    Directory.CreateDirectory(UploadPath);
+                }
+                //Its Create complete path to store in server.  
+                string fullpath = UploadPath + FileName;
+
+                //To copy and save file into server.  
+                file_vn.SaveAs(fullpath);
+            }
+
+            using (var db = new TraCuuBMTEntities())
+            {
+                if (!string.IsNullOrEmpty(kqptplId))
+                {
+                    KetQuaPhanTichPhanLoai kqptpl = db.KetQuaPhanTichPhanLoais.Where(w => w.status > 0 && w.ID == kqptplId).FirstOrDefault();
+                    if (kqptpl != null)
+                    {
+                        int temp = Util.ParseStringToInt(statusString);
+                        if (temp > -99)
+                        {
+                            kqptpl.status = temp;
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Lỗi dữ liệu!";
+                            return RedirectToAction("ListKQPTPL", "Admin");
+                        }
+                        kqptpl.hsCode = hsCode;
+                        kqptpl.So_Vanban = so_Vanban;
+                        kqptpl.CoQuan_PhatHanh_PTPL = coQuan_PhatHanh_PTPL;
+                        kqptpl.Mota_Dnkhaibao = mota_Dnkhaibao;
+                        kqptpl.Mota_KQPTPL = mota_KQPTPL;
+                        kqptpl.DonVi_XNK = donVi_XNK;
+                        kqptpl.Co_Quan_YC_PTPL = co_Quan_YC_PTPL;
+                        kqptpl.ToKhai_HQ = toKhai_HQ;
+                        kqptpl.Loai_Hinh = loai_Hinh;
+                        if (!string.IsNullOrEmpty(FileName))
+                        {
+                            kqptpl.link_file_vn = FileName;
+                        }
+                        kqptpl.Ngay_Vanban = Ngay_Vanban;
+                        kqptpl.Ngay_Vanban_HH = Ngay_Vanban_HH;
+                        kqptpl.unit = unit;
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Tạo mới thành công!";
+                        return RedirectToAction("ListKQPTPL", "Admin");
+                    }
+                    else
+                    {
+                        TempData["WarningMessage"] = "Không tìm thấy Kết quả phân tích phân loại này";
+                        return RedirectToAction("ListKQPTPL", "Admin");
+                    }
+                }
+                else
+                {
+                    TempData["WarningMessage"] = "Không tìm thấy Kết quả phân tích phân loại này";
+                    return RedirectToAction("ListKQPTPL", "Admin");
+                }
+            }
+
+        }
+
         public ActionResult CreateKQPTPL()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -53,7 +181,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult CreateKQPTPL(FormCollection form, HttpPostedFileBase file_vn)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -98,7 +226,7 @@ namespace TraCuuBMT.Controllers
                 //To copy and save file into server.  
                 file_vn.SaveAs(fullpath);
             }
-                
+
 
 
             using (var db = new TraCuuBMTEntities())
@@ -140,7 +268,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListBieuThue()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -158,7 +286,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditBieuThue(string id)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -181,7 +309,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditBieuThue(FormCollection form, HttpPostedFileBase file_vn)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -308,7 +436,8 @@ namespace TraCuuBMT.Controllers
                         bieuThue.B61 = B61;
                         bieuThue.B99 = B99;
 
-                        if(!string.IsNullOrEmpty(FileName)){
+                        if (!string.IsNullOrEmpty(FileName))
+                        {
                             bieuThue.link_file_vn = FileName;
                         }
 
@@ -325,7 +454,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateBieuThue()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -335,7 +464,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult CreateBieuThue(FormCollection form, HttpPostedFileBase file_vn)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -378,7 +507,7 @@ namespace TraCuuBMT.Controllers
             string statusString = form["status"] ?? "";
 
             string FileName = "";
-            if(file_vn != null && !string.IsNullOrEmpty(file_vn.FileName))
+            if (file_vn != null && !string.IsNullOrEmpty(file_vn.FileName))
             {
                 try
                 {
@@ -403,12 +532,12 @@ namespace TraCuuBMT.Controllers
                     //To copy and save file into server.  
                     file_vn.SaveAs(fullpath);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //ghi log
                 }
             }
-            
+
 
 
             using (var db = new TraCuuBMTEntities())
@@ -472,7 +601,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult TransactionUser()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -487,7 +616,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult TransactionStatistic()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -501,7 +630,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateTransaction()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -556,7 +685,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditTransaction(string id)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -580,7 +709,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditTransaction(FormCollection form)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -619,7 +748,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListTransaction()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -636,7 +765,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreatePackage()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -646,47 +775,52 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult CreatePackage(FormCollection form)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
             //validate
-            string email = form["email"];
-            string phone = form["phone"];
+            string packageName = form["packageName"];
+            string description = form["description"];
+            string amount = form["amount"];
+            string price = form["price"];
             string statusString = form["status"] ?? "";
-            string password = form["password"];
 
             using (var db = new TraCuuBMTEntities())
             {
-                User user = new User();
-                user.ID = Util.GenerateID("user");
+                Package item = new Package();
+                item.ID = Util.GenerateID("package");
                 int temp = Util.ParseStringToInt(statusString);
                 if (temp > -99)
                 {
-                    user.status = temp;
+                    item.status = temp;
                 }
                 else
                 {
-                    user.status = 1;
+                    item.status = 1;
                 }
 
-                user.createDate = DateTime.Now;
-                user.email = email;
-                user.phone = phone;
-                user.password = password;
-                user.role = 1;
-                user.type = 1;
-                user.username = email;
-                db.Users.Add(user);
+                item.createDate = DateTime.Now;
+                item.amount = Util.ParseStringToInt(amount ?? "");
+                item.description = description;
+                User currentUser = Util.GetCurrentUser();
+                item.creator = currentUser != null ? currentUser.email : "";
+                item.lastEditDate = DateTime.Now;
+                item.lastEditor = currentUser != null ? currentUser.email : "";
+                item.packageName = packageName;
+                item.price = Util.ParseStringToFloat(price ?? "");
+                item.type = 1;
+
+                db.Packages.Add(item);
                 db.SaveChanges();
             }
             TempData["SuccessMessage"] = "Tạo mới thành công!";
-            return RedirectToAction("ListNormalUser", "Admin");
+            return RedirectToAction("ListPackage", "Admin");
         }
 
         public ActionResult ListPackage()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -701,7 +835,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListNormalUser()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -716,7 +850,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditUser(string id)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -740,7 +874,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditUser(FormCollection form)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -780,7 +914,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult CreateNormalUser()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -790,7 +924,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult CreateNormalUser(FormCollection form)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -831,7 +965,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult ListAdminUser()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -845,7 +979,7 @@ namespace TraCuuBMT.Controllers
         }
         public ActionResult CreateAdminUser()
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -855,7 +989,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult CreateAdminUser(FormCollection form)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -895,7 +1029,7 @@ namespace TraCuuBMT.Controllers
 
         public ActionResult EditAdminUser(string id)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -919,7 +1053,7 @@ namespace TraCuuBMT.Controllers
         [HttpPost]
         public ActionResult EditAdminUser(FormCollection form)
         {
-            if (!CheckAuthenAndAuthor(2))
+            if (!Util.CheckAuthenAndAuthor(2))
             {
                 return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
             }
@@ -956,34 +1090,6 @@ namespace TraCuuBMT.Controllers
             return RedirectToAction("ListNormalUser", "Admin");
         }
 
-        private bool CheckAuthenAndAuthor(int role)
-        {
-            bool result = false;
-            if(Session["userInfo"] != null)
-            {
-                try
-                {
-                    User currentUser = (User)Session["userInfo"];
-                    using(var db = new TraCuuBMTEntities())
-                    {
-                        if (currentUser != null)
-                        {
-                            var temp = db.Users.Where(w => w.status > 0 && w.ID == currentUser.ID && w.role == role).FirstOrDefault();
-                            if(temp != null)
-                            {
-                                result = true;
-                            }
-                        }
-                    }
-
-                }
-                catch(Exception ex)
-                {
-
-                }
-            }
-
-            return result;
-        }
+        
     }
 }

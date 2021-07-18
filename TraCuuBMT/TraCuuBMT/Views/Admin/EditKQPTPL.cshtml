@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    KetQuaPhanTichPhanLoai kqptpl = (KetQuaPhanTichPhanLoai)ViewBag.KetQuaPhanTichPhanLoai;
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Chỉnh sửa Kết quả phân tích phân loại</h3>
+    <div class="contentAdmin">
+        @using (Html.BeginForm("EditKQPTPL", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="hidden" class="form-control" id="kqptplId" name="kqptplId" value="@kqptpl.ID" readonly>
+
+            <div class="form-group">
+                <label for="email">HS Code(*):</label>
+                <input type="text" class="form-control" id="hsCode" name="hsCode" required value="@kqptpl.hsCode">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">ĐVT-BT:</label>
+                <input type="text" class="form-control" id="unit" name="unit" required value="@kqptpl.unit">
+            </div>
+            <div class="form-group">
+                <label for="phone">Số VB PTPL:</label>
+                <input class="form-control" id="so_Vanban" name="so_Vanban" value="@kqptpl.So_Vanban">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Nơi phát hành:</label>
+                <input class="form-control" id="coQuan_PhatHanh_PTPL" name="coQuan_PhatHanh_PTPL" value="@kqptpl.CoQuan_PhatHanh_PTPL">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Mô tả khai báo:</label>
+                <input class="form-control" id="mota_Dnkhaibao" name="mota_Dnkhaibao" value="@kqptpl.Mota_Dnkhaibao">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Mô tả KQ PTPL:</label>
+                <textarea class="form-control" id="mota_KQPTPL" name="mota_KQPTPL">@kqptpl.Mota_KQPTPL</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Tờ khai HQ:</label>
+                <input class="form-control" id="toKhai_HQ" name="toKhai_HQ" value="@kqptpl.ToKhai_HQ">
+            </div>
+            <div class="form-group">
+                <label for="loai_Hinh">Loại hình:</label>
+                <input class="form-control" id="loai_Hinh" name="loai_Hinh" value="@kqptpl.Loai_Hinh">
+            </div>
+
+            <div class="form-group">
+                <label for="Ngay_Vanban">Ngày văn bản:</label>
+                <div class="input-group date" id="Ngay_Vanban">
+                    <input type='text' class="form-control" name="Ngay_Vanban" value="@kqptpl.Ngay_Vanban.ToString("MM/dd/yyyy")" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Ngày văn bản HH:</label>
+                <div class="input-group date" id="Ngay_Vanban_HH">
+                    @{
+                        string Ngay_Vanban_HH = "";
+                        if (kqptpl.Ngay_Vanban_HH != null)
+                        {
+                            Ngay_Vanban_HH = ((DateTime)kqptpl.Ngay_Vanban_HH).ToString("MM/dd/yyyy");
+                        }
+                    }
+                    <input type='text' class="form-control" name="Ngay_Vanban_HH" value="@Ngay_Vanban_HH" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="phone">Đơn vị XNK:</label>
+                <input class="form-control" id="donVi_XNK" name="donVi_XNK" value="@kqptpl.DonVi_XNK">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Đơn vị Y/C PTPL:</label>
+                <input class="form-control" id="co_Quan_YC_PTPL" name="co_Quan_YC_PTPL" value="@kqptpl.Co_Quan_YC_PTPL">
+            </div>
+
+            <div class="form-group">
+                <label for="file_vn">File tiếng Việt</label>
+                <input type="file" class="form-control-file" name="file_vn" id="file_vn">
+                @if (!string.IsNullOrEmpty(kqptpl.link_file_vn) && kqptpl.link_file_vn.Split('.').Length > 1)
+                {
+                    <p>File tiếng Việt hiện tại: <a href="@ViewBag.KQPTPLPath@kqptpl.link_file_vn" target="_blank">@kqptpl.link_file_vn.Split('/').Last()</a></p>
+                }
+            </div>
+
+            @*<div class="form-group">
+                    <label for="exampleFormControlFile1">File tiếng Anh</label>
+                    <input type="file" class="form-control-file" name="file_en" id="file_en">
+                </div>*@
+
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    @foreach (GeneralStatus item in Util.ListGeneralStatus)
+                    {
+                        if (item.StatusValue == kqptpl.status)
+                        {
+                            <option value="@item.StatusValue" selected>@item.StatusName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.StatusValue">@item.StatusName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="TwoButtonAdmin">
+                <a href="@Url.Action("ListKQPTPL", "Admin")" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+            @*</form>*@
+        }
+    </div>
+</div>
+
+<script>
+    $('.input-group.date').datepicker({});
+</script>

@@ -21,6 +21,50 @@ namespace TraCuuBMT.General
             InitListTransactionStatus();
         }
 
+        public static User GetCurrentUser()
+        {
+            User user = null;
+            try
+            {
+                user = (User)System.Web.HttpContext.Current.Session["userInfo"];
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return user;
+        }
+
+        public static bool CheckAuthenAndAuthor(int role)
+        {
+            bool result = false;
+            if (System.Web.HttpContext.Current.Session != null && System.Web.HttpContext.Current.Session["userInfo"] != null)
+            {
+                try
+                {
+                    User currentUser = (User)System.Web.HttpContext.Current.Session["userInfo"];
+                    using (var db = new TraCuuBMTEntities())
+                    {
+                        if (currentUser != null)
+                        {
+                            var temp = db.Users.Where(w => w.status > 0 && w.ID == currentUser.ID && w.role == role).FirstOrDefault();
+                            if (temp != null)
+                            {
+                                result = true;
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return result;
+        }
+
         public static KetQuaPhanTichPhanLoai GetKQPTPLById(string id)
         {
             using (var db = new TraCuuBMTEntities())
@@ -500,6 +544,28 @@ namespace TraCuuBMT.General
                 return result;
             }
         }
+
+
+        public static List<Package> GetListPackage()
+        {
+            using (var db = new TraCuuBMTEntities())
+            {
+                List<Package> result = new List<Package>();
+                result = db.Packages.Where(w => w.status >= 0).OrderBy(w => w.amount).ToList();
+                return result;
+            }
+        }
+
+        public static List<KetQuaPhanTichPhanLoai> GetListKTPTPLBy(string hsCode, string mota)
+        {
+            using (var db = new TraCuuBMTEntities())
+            {
+                List<KetQuaPhanTichPhanLoai> result = new List<KetQuaPhanTichPhanLoai>();
+                result = db.KetQuaPhanTichPhanLoais.Where(w => w.status >= 0 && (w.hsCode.Contains(hsCode) || w.Mota_Dnkhaibao.Contains(mota) || w.Mota_KQPTPL.Contains(mota) || w.description.Contains(mota))).OrderByDescending(w => w.ID).ToList();
+                return result;
+            }
+        }
+
 
         public static List<KetQuaPhanTichPhanLoai> GetListKTPTPL()
         {

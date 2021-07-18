@@ -45,6 +45,7 @@
                             </div>
 
                             <form method="post" action="@Url.Action("Login", "Account")">
+                                <input type="text" id="returnUrl" name="returnUrl" readonly hidden value="@ViewBag.returnUrl" />
                                 <div class="form-group">
                                     <label for="txtPhone">Điện thoại</label>
                                     <input class="form-control" type="text" name="txtPhone" id="txtPhone" required="required" placeholder="Số điện thoại" value="0918222222">

@@ -28,7 +28,7 @@ namespace TraCuuBMT.Controllers
             string result = "0";
             string message = "";
             string detailMessage = "";
-            if(Session["userInfo"] != null)
+            if (Session["userInfo"] != null)
             {
                 try
                 {
@@ -39,9 +39,9 @@ namespace TraCuuBMT.Controllers
                         var userTemp = db.Users.Where(w => w.ID == userId && w.status > -1).FirstOrDefault();
                         if (userTemp != null && userTemp.ID == user.ID)
                         {
-                            if(!string.IsNullOrEmpty(newPassword) && !string.IsNullOrEmpty(confirmNewPassword))
+                            if (!string.IsNullOrEmpty(newPassword) && !string.IsNullOrEmpty(confirmNewPassword))
                             {
-                                if(newPassword == confirmNewPassword)
+                                if (newPassword == confirmNewPassword)
                                 {
                                     userTemp.password = Util.CreateMD5(newPassword);
                                     db.SaveChanges();
@@ -81,7 +81,8 @@ namespace TraCuuBMT.Controllers
                 message = "Phiên đăng nhập không hợp lệ";
             }
 
-            return Json(new {
+            return Json(new
+            {
                 result = result,
                 message = message,
                 detailMessage = detailMessage
@@ -110,7 +111,7 @@ namespace TraCuuBMT.Controllers
 
                     db.Users.Add(user);
                     int temp = db.SaveChanges();
-                    if(temp > 0)
+                    if (temp > 0)
                     {
                         //tạo giao dịch + lượt tải
                         Transaction newItem = new Transaction();
@@ -130,12 +131,13 @@ namespace TraCuuBMT.Controllers
             }
             return View();
         }
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.returnUrl = returnUrl;
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string txtPhone, string txtEmail, string txtPassword)
+        public ActionResult Login(string txtPhone, string txtEmail, string txtPassword, string returnUrl)
         {
             using (var db = new TraCuuBMTEntities())
             {
@@ -145,6 +147,11 @@ namespace TraCuuBMT.Controllers
                 {
                     Session["userInfo"] = user;
                     TempData.Remove("WarningMessage");
+
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -152,7 +159,7 @@ namespace TraCuuBMT.Controllers
                     TempData["WarningMessage"] = "Thông tin đăng nhập không đúng";
                 }
             }
-                return View();
+            return View();
         }
 
         public ActionResult LoginAdmin(string returnUrl)
@@ -194,6 +201,8 @@ namespace TraCuuBMT.Controllers
             Session.Abandon();
             return RedirectToAction("LoginAdmin", "Account");
         }
+
+        
 
 
     }

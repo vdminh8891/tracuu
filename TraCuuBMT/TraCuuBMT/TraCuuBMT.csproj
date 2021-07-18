@@ -288,6 +288,8 @@
     <Content Include="Views\Admin\CreateAdminUser.cshtml" />
     <Content Include="Views\Admin\ListAdminUser.cshtml" />
     <Content Include="Views\Admin\EditAdminUser.cshtml" />
+    <Content Include="Views\Admin\EditKQPTPL.cshtml" />
+    <Content Include="Views\Home\RegisterMore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

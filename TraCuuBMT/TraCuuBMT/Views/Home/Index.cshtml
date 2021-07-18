@@ -1,6 +1,6 @@
 ﻿@using TraCuuBMT.Models
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang chủ";
     List<BieuThue> listBieuThue = ViewBag.ListBieuThue;
     List<SubBieuThue> listSubBieuThue = ViewBag.ListSubBieuThue;
     List<KetQuaPhanTichPhanLoai> listKQPTPL = ViewBag.ListKQPTPL;
@@ -33,7 +33,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="confirmSendEmail" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -50,7 +49,7 @@
 
                 <div class="rowProfile">
                     <div><i class="fa fa-download"></i></div>
-                    <div>Tài nguyên còn hạn sử dụng: <span style="color:red">10</span> <span><a href="#">Đăng ký thêm</a></span></div>
+                    <div>Tài nguyên còn hạn sử dụng: <span style="color:red">10</span> <span><a href="@Url.Action("RegisterMore","Home")">Đăng ký thêm</a></span></div>
                 </div>
 
             </div>

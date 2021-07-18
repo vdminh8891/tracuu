@@ -1,0 +1,46 @@
+﻿@using TraCuuBMT.Models
+@{
+    ViewBag.Title = "Đăng ký tài nguyê";
+    User user = (User)Session["userInfo"];
+    List<Package> ListPackage = (List<Package>)ViewBag.ListPackage;
+}
+
+@*Đăng ký tài nguyê*@
+<div id="registerMore">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#ketQuaPhanTichPhanLoai">Đăng ký tài nguyên</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="ketQuaPhanTichPhanLoai" class="tab-pane fade in active">
+            <h3>Đăng ký tài nguyên</h3>
+            <table class="table table-bordered BieuThueTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Chọn</th>
+                        <th scope="col">Gói tài nguyên</th>
+                        <th scope="col">Thành tiền</th>
+                        <th scope="col">Mô tả</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int indexPackage = 1;
+                        foreach (var item in ListPackage)
+                        {
+                            <tr>
+                                <th scope="row">@indexPackage</th>
+                                <td><input type="checkbox" id="@item.ID" value=""></td>
+                                <td>@item.amount</td>
+                                <td>@item.price</td>
+                                <td>@item.description</td>
+                            </tr>
+                            indexPackage++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
