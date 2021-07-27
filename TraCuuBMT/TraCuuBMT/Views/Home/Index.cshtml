@@ -6,6 +6,7 @@
     List<KetQuaPhanTichPhanLoai> listKQPTPL = ViewBag.ListKQPTPL;
     List<ThueVAT> listThueVAT = ViewBag.ListThueVAT;
     User user = (User)Session["userInfo"];
+    List<Transaction> ListTransaction = (List<Transaction>)ViewBag.ListTransaction;
 }
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
@@ -49,7 +50,7 @@
 
                 <div class="rowProfile">
                     <div><i class="fa fa-download"></i></div>
-                    <div>Tài nguyên còn hạn sử dụng: <span style="color:red">10</span> <span><a href="@Url.Action("RegisterMore","Home")">Đăng ký thêm</a></span></div>
+                    <div>Tài nguyên còn hạn sử dụng: <span style="color:red">@ListTransaction.Sum(w => w.amount)</span> <span style="cursor: pointer; color:blue" data-toggle="modal" data-target="#registerMoreModal" data-dismiss="modal">Đăng ký thêm</span></div>
                 </div>
 
             </div>

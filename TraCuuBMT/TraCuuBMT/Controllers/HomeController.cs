@@ -18,6 +18,9 @@ namespace TraCuuBMT.Controllers
                 return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
             }
 
+            ViewBag.ListPackage = Util.GetListPackage();
+            ViewBag.ListTransaction = Util.GetListTransactionByUserId(Util.GetCurrentUser().ID);
+
             ViewBag.type = type;
             //danh sách ban đầu của tất cả các loại
             //bieu thue
@@ -55,16 +58,16 @@ namespace TraCuuBMT.Controllers
             return View();
         }
 
-        public ActionResult RegisterMore()
-        {
-            if (!Util.CheckAuthenAndAuthor(1))
-            {
-                return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
-            }
+        //public ActionResult RegisterMore()
+        //{
+        //    if (!Util.CheckAuthenAndAuthor(1))
+        //    {
+        //        return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
+        //    }
 
-            ViewBag.ListPackage = Util.GetListPackage();
-            return View();
-        }
+        //    ViewBag.ListPackage = Util.GetListPackage();
+        //    return View();
+        //}
 
         public ActionResult About()
         {
@@ -84,6 +87,10 @@ namespace TraCuuBMT.Controllers
         public ActionResult SendEmail(string itemId)
         {
             bool result = false;
+            if (!Util.CheckAuthenAndAuthor(1))
+            {
+                return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
+            }
             try
             {
                 string fromEMail = ConfigurationManager.AppSettings["FromEmail"].ToString();
@@ -103,8 +110,11 @@ namespace TraCuuBMT.Controllers
                         string fullpath = UploadPath + item.link_file_vn;
                         if (System.IO.File.Exists(fullpath))
                         {
-                            Util.SendEmail(toEmail, fromEMail, subject, body, password, fullpath);
-                            result = true;
+                            result = Util.SendEmail(toEmail, fromEMail, subject, body, password, fullpath);
+                            if (result)
+                            {
+                                Util.CreateTransactionByAmount(user.ID, -1);
+                            }
                         }
                     }
                 }
@@ -121,6 +131,73 @@ namespace TraCuuBMT.Controllers
             }
 
             return Json(new { result = result, JsonRequestBehavior.AllowGet }); ;
+        }
+
+
+        [HttpPost]
+        public ActionResult RegisterMore(string userId, List<string> listPackageId)
+        {
+            bool result = false;
+            string message = "";
+            string detailMessage = "";
+            if (!Util.CheckAuthenAndAuthor(1))
+            {
+                return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            try
+            {
+                if(Util.GetCurrentUser().ID == userId)
+                {
+                    int resultCount = 0;
+                    foreach (string packageId in listPackageId)
+                    {
+                        if (!string.IsNullOrEmpty(packageId))
+                        {
+                            int insertResult = Util.CreateTransactionByPackageId(userId, packageId);
+                            resultCount += insertResult;
+                        }
+                    }
+                    if (resultCount > 0)
+                    {
+                        if (resultCount == listPackageId.Count)
+                        {
+                            //insert ok all
+                            message = "Đăng ký thành công";
+                        }
+                        else
+                        {
+                            //insert not ok all
+                            message = "Có lỗi xảy ra! Đăng ký thành công 1 bộ phận!";
+                        }
+                        result = true;
+                    }
+                    else
+                    {
+                        message = "Có lỗi xảy ra! Vui lòng thử lại";
+                        detailMessage = "resultCount = 0";
+                    }
+                }
+                else
+                {
+                    message = "Có lỗi xảy ra! Vui lòng thử lại";
+                    detailMessage = "Error session";
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                message = "Có lỗi xảy ra! Vui lòng thử lại";
+                detailMessage = ex.ToString();
+            }
+
+            //return Json(new { result = result, JsonRequestBehavior.AllowGet }); ;
+            return Json(new
+            {
+                result = result,
+                message = message,
+                detailMessage = detailMessage
+            });
         }
     }
 }

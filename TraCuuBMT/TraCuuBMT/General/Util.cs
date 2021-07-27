@@ -21,6 +21,99 @@ namespace TraCuuBMT.General
             InitListTransactionStatus();
         }
 
+        public static List<Transaction> GetListTransactionByUserId(string userId)
+        {
+            List<Transaction> result = new List<Transaction>();
+            try
+            {
+                using (var db = new TraCuuBMTEntities())
+                {
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        result = db.Transactions.Where(w => w.userId == userId && w.status >=1 && w.status < 4).ToList();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //log
+            }
+            return result;
+        }
+
+        public static int CreateTransactionByPackageId(string userId, string packageId)
+        {
+            int result = 0;
+            try
+            {
+                using (var db = new TraCuuBMTEntities())
+                {
+                    if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(packageId))
+                    {
+                        User user = GetUserById(userId);
+                        Package package = GetPackageById(packageId);
+
+                        if (user != null && package != null)
+                        {
+                            Transaction newItem = new Transaction();
+                            newItem.ID = Util.GenerateID("transaction");
+                            newItem.createDate = DateTime.Now;
+                            newItem.creator = user.email;
+                            newItem.currentPrice = package.price;
+                            newItem.status = 0;//ok, register, chưa thanh toán, not approved
+                            newItem.type = 2;//created by user
+                            newItem.userId = user.ID;
+                            newItem.packageId = packageId;
+                            newItem.amount = package.amount;
+                            db.Transactions.Add(newItem);
+                            result = db.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //log
+            }
+            return result; 
+        }
+
+        public static int CreateTransactionByAmount(string userId, int amount=1)
+        {
+            int result = 0;
+            try
+            {
+                using (var db = new TraCuuBMTEntities())
+                {
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        User user = GetUserById(userId);
+
+                        if (user != null)
+                        {
+                            Transaction newItem = new Transaction();
+                            newItem.ID = Util.GenerateID("transaction");
+                            newItem.createDate = DateTime.Now;
+                            newItem.creator = user.email;
+                            newItem.currentPrice = 0;
+                            newItem.status = 1;//ok, not approved
+                            newItem.type = 2;//created by user
+                            newItem.userId = user.ID;
+                            newItem.packageId = "";
+                            newItem.amount = amount;
+                            db.Transactions.Add(newItem);
+                            result = db.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //log
+            }
+            return result;
+        }
+
         public static User GetCurrentUser()
         {
             User user = null;
@@ -34,6 +127,42 @@ namespace TraCuuBMT.General
             }
             return user;
         }
+
+        public static User GetUserById(string userId)
+        {
+            User user = null;
+            try
+            {
+                using (var db = new TraCuuBMTEntities())
+                {
+                    user = db.Users.Where(w => w.ID == userId).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return user;
+        }
+
+        public static Package GetPackageById(string id)
+        {
+            Package result = null;
+            try
+            {
+                using (var db = new TraCuuBMTEntities())
+                {
+                    result = db.Packages.Where(w => w.ID == id).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+
 
         public static bool CheckAuthenAndAuthor(int role)
         {
@@ -718,6 +847,7 @@ namespace TraCuuBMT.General
             ListGeneralStatus.Add(item3);
         }
 
+
         public static string GenerateID(string prefix)
         {
             return prefix + "_" + DateTimeOffset.Now.ToUnixTimeSeconds() + "_" + getrandom.Next(1, 1000000);
@@ -743,6 +873,12 @@ namespace TraCuuBMT.General
     }
 
     public class GeneralStatus
+    {
+        public int StatusValue { get; set; }
+        public string StatusName { get; set; }
+    }
+
+    public class TransactionStatus
     {
         public int StatusValue { get; set; }
         public string StatusName { get; set; }

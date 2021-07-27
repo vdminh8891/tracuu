@@ -1,8 +1,8 @@
 ﻿body {
 }
 
-.tab-content{
-    min-height:100vh;
+.tab-content {
+    min-height: 100vh;
 }
 
 .control-label {
@@ -18,11 +18,11 @@
 .disabledLink {
     pointer-events: none;
     cursor: default;
-    background-color:gray;
+    background-color: gray;
 }
 
-.TwoButtonAdmin{
-    float:right;
+.TwoButtonAdmin {
+    float: right;
 }
 
 .containerAdmin {
@@ -123,4 +123,47 @@ div > .rowProfile:not(:first-child) {
 .myBody {
     height: 100%;
     min-height: 830px;
+}
+
+.registerMore {
+    background: white;
+    max-width: 800px;
+    padding: 20px;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    display:flex;
+    flex-direction:column;
+}
+
+.totalArea_registerMore {
+    display: flex;
+    flex-direction: column;
+    float: right;
+    width: fit-content;
+}
+
+.row_totalArea {
+    display: flex;
+    flex-direction: row;
+
+}
+
+    .row_totalArea div:nth-child(1) {
+        min-width: 150px;
+    }
+
+    .row_totalArea div:nth-child(2) {
+        min-width: 120px;
+    }
+
+.twoButtonRegister {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.twoButtonRegister button:nth-child(2){
+    margin-left:20px;
 }

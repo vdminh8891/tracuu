@@ -119,10 +119,11 @@ namespace TraCuuBMT.Controllers
                         newItem.createDate = DateTime.Now;
                         newItem.creator = "System";
                         newItem.currentPrice = 0;
-                        newItem.status = 1;//ok, apply
+                        newItem.status = 1;//ok, auto created status
                         newItem.type = 1;//created by system
                         newItem.userId = user.ID;
                         newItem.packageId = "firstRegisterPackage";
+                        newItem.amount = 1;
                         db.Transactions.Add(newItem);
                         db.SaveChanges();
                     }

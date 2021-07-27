@@ -720,7 +720,7 @@ namespace TraCuuBMT.Controllers
                 string statusString = form["status"] ?? "";
                 if (!string.IsNullOrEmpty(transactionId))
                 {
-                    Transaction item = db.Transactions.Where(w => w.status > 0 && w.ID == transactionId).FirstOrDefault();
+                    Transaction item = db.Transactions.Where(w => w.status >= 0 && w.ID == transactionId).FirstOrDefault();
                     if (item != null)
                     {
                         int temp = Util.ParseStringToInt(statusString);
@@ -742,7 +742,7 @@ namespace TraCuuBMT.Controllers
 
                 }
             }
-            TempData["WarningMessage"] = "Không tìm thấy user này";
+            TempData["WarningMessage"] = "Không tìm thấy giao dịch này";
             return RedirectToAction("ListTransaction", "Admin");
         }
 
