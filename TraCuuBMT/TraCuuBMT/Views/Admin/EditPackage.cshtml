@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Package item = (Package)ViewBag.Package;
+}
+@using TraCuuBMT.Models;
+@using TraCuuBMT.General;
+
+<div>
+    <h3>Tạo mới gói tài nguyên</h3>
+    <div class="contentAdmin">
+        <form action="@Url.Action("EditPackage","Admin")" method="post">
+            <input type="hidden" class="form-control" id="packageId" name="packageId" value="@item.ID" readonly>
+            <div class="form-group">
+                <label for="email">Tên gói(*):</label>
+                <input type="text" class="form-control" id="packageName" name="packageName" required value="@item.packageName">
+            </div>
+            <div class="form-group">
+                <label for="phone">Mô tả(*):</label>
+                <input type="text" class="form-control" id="description" name="description" required value="@item.description">
+            </div>
+            <div class="form-group">
+                <label for="phone">Số lượng(*):</label>
+                <input type="text" class="form-control" id="amount" name="amount" required value="@item.amount">
+            </div>
+            <div class="form-group">
+                <label for="phone">Đơn giá(*):</label>
+                <input type="text" class="form-control" id="price" name="price" required value="@item.price">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    @foreach (GeneralStatus itemStatus in Util.ListGeneralStatus)
+                    {
+                        if (itemStatus.StatusValue == item.status)
+                        {
+                            <option value="@itemStatus.StatusValue" selected>@itemStatus.StatusName</option>
+                        }
+                        else
+                        {
+                            <option value="@itemStatus.StatusValue">@itemStatus.StatusName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="TwoButtonAdmin">
+                <a href="@Url.Action("ListPackage","Admin")" class="btn btn-default">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
