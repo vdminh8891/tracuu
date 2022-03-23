@@ -1,6 +1,8 @@
 ﻿@using TraCuuBMT.Models
 @{
     User user = (User)Session["userInfo"];
+    List<Package> ListPackage = (List<Package>)ViewBag.ListPackage;
+    List<Transaction> ListTransaction = (List<Transaction>)ViewBag.ListTransaction;
 }
 <!DOCTYPE html>
 <html>
@@ -41,11 +43,11 @@
                     </div>
                     <div class="rowProfile">
                         <div><i class="fas fa-lock"></i></div>
-                        <div style="cursor: pointer;" data-toggle="modal" data-target="#changePassModal">Đổi mật khẩu</div>
+                        <div style="cursor: pointer;" data-toggle="modal" data-target="#changePassModal" data-dismiss="modal">Đổi mật khẩu</div>
                     </div>
                     <div class="rowProfile">
                         <div><i class="fa fa-download"></i></div>
-                        <div>Tài nguyên còn hạn sử dụng: <span style="color:red">10</span> <span><a href="@Url.Action("RegisterMore","Home")">Đăng ký thêm</a></span></div>
+                        <div>Tài nguyên còn hạn sử dụng: <span style="color:red">@ListTransaction.Sum(w => w.amount)</span> <span style="cursor: pointer; color:blue" data-toggle="modal" data-target="#registerMoreModal" data-dismiss="modal">Đăng ký thêm</span></div>
                     </div>
                     <div class="rowProfile">
                         <div><i class="fa fa-history"></i></div>
@@ -93,6 +95,60 @@
         </div>
     </div>
 
+    <div class="modal" id="registerMoreModal" tabindex="-1" role="dialog">
+        <div class="registerMore" id="registerMore">
+
+            <div class="tab-content" style="min-height:unset">
+                <div id="ketQuaPhanTichPhanLoai" class="tab-pane fade in active">
+                    <h3>Đăng ký tài nguyên</h3>
+                    <table class="table table-bordered BieuThueTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" style="width:50px">Chọn</th>
+                                <th scope="col" style="width:150px">Gói tài nguyên</th>
+                                <th scope="col" style="width:150px">Thành tiền (VND)</th>
+                                <th scope="col">Mô tả</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int indexPackage = 1;
+                                foreach (var item in ListPackage)
+                                {
+                                    <tr>
+                                        <th scope="row">@indexPackage</th>
+                                        <td><input type="checkbox" class="checkbox_package" id="@item.ID" value=""></td>
+                                        <td id="amout_@item.ID">@item.amount</td>
+                                        <td id="price_@item.ID">@item.price.ToString("N0")</td>
+                                        <td>@item.description</td>
+                                    </tr>
+                                    indexPackage++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="totalArea_registerMore">
+                    <div class="row_totalArea">
+                        <div>Tổng tiền:</div>
+                        <div id="totalMoney_registerMore">0 VND</div>
+                    </div>
+                    <div class="row_totalArea">
+                        <div>Tài nguyên đăng ký:</div>
+                        <div id="totalRes_registerMore">0</div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="twoButtonRegister">
+                <button type="button" id="confirmRegister" class="btn btn-success">Đăng ký</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container" style="display:flex">
@@ -151,7 +207,7 @@
                                 jsonResult = JSON.parse(JSON.stringify(result));
                                 alert(jsonResult.message);
                                 $('#changePassModal').modal('hide');
- 
+
                             },
                             error: function () {
                                 alert('Lỗi hệ thống!');;
@@ -163,7 +219,74 @@
 
 
             });
+
+            $('#confirmRegister').click(function () {
+                if (!isRegister) {
+                    alert('Vui lòng chọn ít nhất môt gói tài nguyên.');
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("RegisterMore", "Home")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            userId: $('#userId').val(),
+                            listPackageId: listPackageId,
+                        }),
+                        dataType: "json",
+                        success: function (result) {
+                            jsonResult = JSON.parse(JSON.stringify(result));
+                            alert(jsonResult.message);
+                            $('#registerMoreModal').modal('hide');
+                        },
+                        error: function () {
+                            alert('Lỗi hệ thống!');;
+                        }
+                    });
+                }
+            });
+
+            $('.checkbox_package').change(function () {
+                countAllCheckbox();
+            });
         });
+
+
+        function addCommas(nStr) {
+            nStr += '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+        var listPackageId = [];
+        var totalMoney = 0;
+        var totalRes = 0;
+        var isRegister = false;
+        function countAllCheckbox() {
+            listPackageId = [];
+            totalMoney = 0;
+            totalRes = 0;
+            isRegister = false;
+
+            $('.checkbox_package:checked').each(function () {
+                isRegister = true;
+                var idcheckbox = $(this).attr('id');
+                listPackageId.push(idcheckbox);
+                var money = $("#price_" + idcheckbox).text().replace(",", "");
+                totalMoney += parseInt(money, 10);
+                var res = $("#amout_" + idcheckbox).text().replace(",", "");
+                totalRes += parseInt(res, 10);
+            });
+
+            $("#totalMoney_registerMore").text(addCommas(totalMoney) + " VND");
+            $("#totalRes_registerMore").text(addCommas(totalRes));
+
+        }
     </script>
 </body>
 

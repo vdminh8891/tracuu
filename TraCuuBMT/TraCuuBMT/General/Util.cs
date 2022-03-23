@@ -674,6 +674,17 @@ namespace TraCuuBMT.General
             }
         }
 
+        public static List<ThueVAT> GetListThueVATByNameOrMoTa(string keyword)
+        {
+            keyword = keyword.Trim().ToLower();
+            using (var db = new TraCuuBMTEntities())
+            {
+                List<ThueVAT> result = new List<ThueVAT>();
+                result = db.ThueVATs.Where(w => w.status >= 0 && (w.mota.ToLower().Contains(keyword) || w.name.Contains(keyword))).OrderBy(w => w.ID).ToList();
+                return result;
+            }
+        }
+
 
         public static List<Package> GetListPackage()
         {
@@ -706,7 +717,7 @@ namespace TraCuuBMT.General
             }
         }
 
-        public static bool SendEmail(string toEmail, string fromEmail, string subject, string body, string passwordFromEmail, string attachFileUrl)
+        public static bool SendEmail(string toEmail, string fromEmail, string subject, string body, string passwordFromEmail, string attachFileUrl, ref string detailError)
         {
             bool result = false;
 
@@ -740,6 +751,7 @@ namespace TraCuuBMT.General
             }
             catch (Exception ex)
             {
+                detailError = ex.ToString();
                 result = false;
             }
 

@@ -11,14 +11,14 @@
         @using (Html.BeginForm("CreateBieuThue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
 
-            <div class="form-group">
+            @*<div class="form-group">
                 <label for="email">Tên biểu thuế(*):</label>
                 <input type="text" class="form-control" id="tenBieuThue" name="tenBieuThue" required value="">
             </div>
             <div class="form-group">
                 <label for="phone">Mô tả:</label>
                 <input type="text" class="form-control" id="description" name="description" required value="">
-            </div>
+            </div>*@
             <div class="form-group">
                 <label for="phone">HS Code(*):</label>
                 <input type="text" class="form-control" id="HS_CODE" name="HS_CODE" required value="">
@@ -152,21 +152,45 @@
                 <label for="phone">B99:</label>
                 <input type="text" class="form-control" id="B99" name="B99" value="">
             </div>
+            <div class="form-group">
+                <label for="THUE_EXPORT">Thuế suất xuất khẩu:</label>
+                <input type="text" class="form-control" id="THUE_EXPORT" name="THUE_EXPORT" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="THUE_BVMT">Thuế bảo vệ môi trường:</label>
+                <input type="text" class="form-control" id="THUE_BVMT" name="THUE_BVMT" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="THUE_TTDB">Thuế tiêu thụ đặc biệt:</label>
+                <input type="text" class="form-control" id="THUE_TTDB" name="THUE_TTDB" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="THUE_TVCBPG">Thuế chống bán phá giá:</label>
+                <input type="text" class="form-control" id="THUE_TVCBPG" name="THUE_TVCBPG" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="THUE_PBDX">Thuế phân biệt đối xử:</label>
+                <input type="text" class="form-control" id="THUE_PBDX" name="THUE_PBDX" value="">
+            </div>
 
             <div class="form-group">
                 <label for="phone">Ghi chú:</label>
                 <textarea class="form-control" id="note" name="note"></textarea>
             </div>
 
-            <div class="form-group" style="display:none">
+            @*<div class="form-group" style="display:none">
                 <label for="file_vn">File tiếng Việt</label>
                 <input type="file" class="form-control-file" name="file_vn" id="file_vn">
             </div>
 
             <div class="form-group" style="display:none">
-                <label for="exampleFormControlFile1">File tiếng Anh</label>
+                <label for="file_en">File tiếng Anh</label>
                 <input type="file" class="form-control-file" name="file_en" id="file_en">
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <label for="status">Trạng thái:</label>

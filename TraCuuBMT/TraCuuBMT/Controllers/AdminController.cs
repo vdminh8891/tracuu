@@ -36,7 +36,7 @@ namespace TraCuuBMT.Controllers
             List<KetQuaPhanTichPhanLoai> listKQPTPL = new List<KetQuaPhanTichPhanLoai>();
             using (var db = new TraCuuBMTEntities())
             {
-                listKQPTPL = db.KetQuaPhanTichPhanLoais.Where(w => w.status > 0).ToList();
+                listKQPTPL = db.KetQuaPhanTichPhanLoais.Where(w => w.status > 0).OrderByDescending(w=>w.createDate).ToList();
             }
             ViewBag.ListKQPTPL = listKQPTPL;
             ViewBag.KQPTPLPath = Request.Url.GetLeftPart(UriPartial.Authority) + ConfigurationManager.AppSettings["KQPTPLPath"].ToString();
@@ -90,8 +90,13 @@ namespace TraCuuBMT.Controllers
             DateTime Ngay_Vanban = DateTime.ParseExact(Ngay_VanbanString, "MM/dd/yyyy",
                                        System.Globalization.CultureInfo.InvariantCulture);
             string Ngay_Vanban_HHString = form["Ngay_Vanban_HH"];
-            DateTime Ngay_Vanban_HH = DateTime.ParseExact(Ngay_Vanban_HHString, "MM/dd/yyyy",
+            DateTime? Ngay_Vanban_HH = null;
+            if (!string.IsNullOrEmpty(Ngay_Vanban_HHString))
+            {
+                Ngay_Vanban_HH = DateTime.ParseExact(Ngay_Vanban_HHString, "MM/dd/yyyy",
                            System.Globalization.CultureInfo.InvariantCulture);
+            }
+             
             string statusString = form["status"] ?? "";
 
             string FileName = "";
@@ -197,11 +202,19 @@ namespace TraCuuBMT.Controllers
             string toKhai_HQ = form["toKhai_HQ"];
             string loai_Hinh = form["loai_Hinh"];
             string Ngay_VanbanString = form["Ngay_Vanban"];
+
+
             DateTime Ngay_Vanban = DateTime.ParseExact(Ngay_VanbanString, "MM/dd/yyyy",
-                                       System.Globalization.CultureInfo.InvariantCulture);
+                       System.Globalization.CultureInfo.InvariantCulture);
+
             string Ngay_Vanban_HHString = form["Ngay_Vanban_HH"];
-            DateTime Ngay_Vanban_HH = DateTime.ParseExact(Ngay_Vanban_HHString, "MM/dd/yyyy",
+            DateTime? Ngay_Vanban_HH = null;
+            if (!string.IsNullOrEmpty(Ngay_Vanban_HHString))
+            {
+                Ngay_Vanban_HH = DateTime.ParseExact(Ngay_Vanban_HHString, "MM/dd/yyyy",
                            System.Globalization.CultureInfo.InvariantCulture);
+            }
+             
             string statusString = form["status"] ?? "";
 
             string FileName = "";
@@ -352,6 +365,11 @@ namespace TraCuuBMT.Controllers
                 double B30 = Util.ParseStringToFloat(form["B30"] ?? "");
                 double B61 = Util.ParseStringToFloat(form["B61"] ?? "");
                 double B99 = Util.ParseStringToFloat(form["B99"] ?? "");
+                double THUE_TVCBPG = Util.ParseStringToFloat(form["THUE_TVCBPG"] ?? "");
+                double THUE_TTDB = Util.ParseStringToFloat(form["THUE_TTDB"] ?? "");
+                double THUE_PBDX = Util.ParseStringToFloat(form["THUE_PBDX"] ?? "");
+                double THUE_EXPORT = Util.ParseStringToFloat(form["THUE_EXPORT"] ?? "");
+                double THUE_BVMT = Util.ParseStringToFloat(form["THUE_BVMT"] ?? "");
                 string FileName = "";
                 if (file_vn != null && file_vn?.ContentLength != 0)
                 {
@@ -435,6 +453,11 @@ namespace TraCuuBMT.Controllers
                         bieuThue.B30 = B30;
                         bieuThue.B61 = B61;
                         bieuThue.B99 = B99;
+                        bieuThue.THUE_BVMT = THUE_BVMT;
+                        bieuThue.THUE_EXPORT = THUE_EXPORT;
+                        bieuThue.THUE_PBDX = THUE_PBDX;
+                        bieuThue.THUE_TTDB = THUE_TTDB;
+                        bieuThue.THUE_TVCBPG = THUE_TVCBPG;
 
                         if (!string.IsNullOrEmpty(FileName))
                         {
@@ -504,6 +527,12 @@ namespace TraCuuBMT.Controllers
             double B30 = Util.ParseStringToFloat(form["B30"] ?? "");
             double B61 = Util.ParseStringToFloat(form["B61"] ?? "");
             double B99 = Util.ParseStringToFloat(form["B99"] ?? "");
+            double THUE_TVCBPG = Util.ParseStringToFloat(form["THUE_TVCBPG"] ?? "");
+            double THUE_TTDB = Util.ParseStringToFloat(form["THUE_TTDB"] ?? "");
+            double THUE_PBDX = Util.ParseStringToFloat(form["THUE_PBDX"] ?? "");
+            double THUE_EXPORT = Util.ParseStringToFloat(form["THUE_EXPORT"] ?? "");
+            double THUE_BVMT = Util.ParseStringToFloat(form["THUE_BVMT"] ?? "");
+
             string statusString = form["status"] ?? "";
 
             string FileName = "";
@@ -538,8 +567,6 @@ namespace TraCuuBMT.Controllers
                 }
             }
 
-
-
             using (var db = new TraCuuBMTEntities())
             {
                 BieuThue item = new BieuThue();
@@ -555,8 +582,8 @@ namespace TraCuuBMT.Controllers
                 }
 
                 item.createDate = DateTime.Now;
-                item.description = description;
-                item.tenBieuThue = tenBieuThue;
+                item.description = description??"";
+                item.tenBieuThue = tenBieuThue??"";
                 item.HS_CODE = HS_CODE;
                 item.note = note;
                 item.link_file_vn = FileName;
@@ -592,6 +619,11 @@ namespace TraCuuBMT.Controllers
                 item.B61 = B61;
                 item.B99 = B99;
                 item.DVT_SL2 = DVT_SL2;
+                item.THUE_BVMT = THUE_BVMT;
+                item.THUE_EXPORT = THUE_EXPORT;
+                item.THUE_PBDX = THUE_PBDX;
+                item.THUE_TTDB = THUE_TTDB;
+                item.THUE_TVCBPG = THUE_TVCBPG;
                 db.BieuThues.Add(item);
                 db.SaveChanges();
             }
@@ -815,6 +847,76 @@ namespace TraCuuBMT.Controllers
                 db.SaveChanges();
             }
             TempData["SuccessMessage"] = "Tạo mới thành công!";
+            return RedirectToAction("ListPackage", "Admin");
+        }
+
+        public ActionResult EditPackage(string id)
+        {
+            if (!Util.CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            using (var db = new TraCuuBMTEntities())
+            {
+                Package item = db.Packages.Where(w => w.status > 0 && w.ID == id).FirstOrDefault();
+                if (item != null)
+                {
+                    ViewBag.Package = item;
+                    return View();
+                }
+                else
+                {
+                    TempData["WarningMessage"] = "Không tìm thấy package này";
+                    return RedirectToAction("ListPackage", "Admin");
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditPackage(FormCollection form)
+        {
+            if (!Util.CheckAuthenAndAuthor(2))
+            {
+                return RedirectToAction("LoginAdmin", "Account", new { returnUrl = Request.Url.ToString() });
+            }
+            using (var db = new TraCuuBMTEntities())
+            {
+                string packageName = form["packageName"];
+                string description = form["description"];
+                string amount = form["amount"];
+                string price = form["price"];
+                string statusString = form["status"] ?? "";
+                string packageId = form["packageId"] ?? "";
+
+                if (!string.IsNullOrEmpty(packageId))
+                {
+                    Package item = db.Packages.Where(w => w.status > 0 && w.ID == packageId).FirstOrDefault();
+                    if (item != null)
+                    {
+                        int temp = Util.ParseStringToInt(statusString);
+                        if (temp > -99)
+                        {
+                            item.status = temp;
+                            item.amount = Util.ParseStringToInt(amount);
+                            item.price = Util.ParseStringToInt(price);
+                            item.packageName = packageName;
+                            item.lastEditDate = DateTime.Now;
+                            item.description = description;
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Lỗi dữ liệu!";
+                            return RedirectToAction("ListPackage", "Admin");
+                        }
+
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Chỉnh sửa thành công!";
+                        return RedirectToAction("ListPackage", "Admin");
+                    }
+
+                }
+            }
+            TempData["WarningMessage"] = "Không tìm thấy package này";
             return RedirectToAction("ListPackage", "Admin");
         }
 
@@ -1090,6 +1192,6 @@ namespace TraCuuBMT.Controllers
             return RedirectToAction("ListNormalUser", "Admin");
         }
 
-        
+
     }
 }

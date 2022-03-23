@@ -161,3 +161,13 @@ function addMoreThongTinNguoiGuiNhan() {
     $("#myModal").modal()
 }
 
+function validateFileSize(input) {
+    const fileSize = input.files[0].size / 1024 / 1024; // in MiB
+    if (fileSize > 4) {
+        alert('Vui lòng chỉ upload file tối đa 4 MB');
+        $(input).val(''); //for clearing with Jquery
+    } else {
+        // Proceed further
+    }
+}
+

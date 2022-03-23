@@ -1,8 +1,15 @@
 ﻿@using TraCuuBMT.Models
+@using TraCuuBMT.General
 @{
     User user = (User)Session["userInfo"];
     List<Package> ListPackage = (List<Package>)ViewBag.ListPackage;
     List<Transaction> ListTransaction = (List<Transaction>)ViewBag.ListTransaction;
+    var sumTransaction = 0;
+    if (ListTransaction != null && ListTransaction.Count > 0)
+    {
+        sumTransaction = ListTransaction.Sum(w => w.amount);
+    }
+
 }
 <!DOCTYPE html>
 <html>
@@ -47,11 +54,11 @@
                     </div>
                     <div class="rowProfile">
                         <div><i class="fa fa-download"></i></div>
-                        <div>Tài nguyên còn hạn sử dụng: <span style="color:red">@ListTransaction.Sum(w => w.amount)</span> <span style="cursor: pointer; color:blue" data-toggle="modal" data-target="#registerMoreModal" data-dismiss="modal">Đăng ký thêm</span></div>
+                        <div>Tài nguyên còn hạn sử dụng: <span style="color:red">@sumTransaction</span> <span style="cursor: pointer; color:blue" data-toggle="modal" data-target="#registerMoreModal" data-dismiss="modal">Đăng ký thêm</span></div>
                     </div>
                     <div class="rowProfile">
                         <div><i class="fa fa-history"></i></div>
-                        <div>Lịch sử giao dịch</div>
+                        <div><span style="cursor: pointer; color:blue" data-toggle="modal" data-target="#ListPersonalTransactionModal" data-dismiss="modal">Lịch sử giao dịch</span></div>
                     </div>
                     <div class="rowProfile">
                         <div><i class="fas fa-sign-out-alt" style="color:red"></i></div>
@@ -63,6 +70,55 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="modal" id="ListPersonalTransactionModal" tabindex="-1" role="dialog">
+        <div class="registerMore">
+            <div class="tab-content" style="min-height:unset">
+                <div id="ketQuaPhanTichPhanLoai" class="tab-pane fade in active">
+                    <h3>Lịch sử giao dịch</h3>
+                    @if (ListTransaction != null && ListTransaction.Count > 0)
+                    {
+                        <table class="table table-bordered BieuThueTable">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" style="width:50px">#</th>
+                                    <th scope="col" style="width:100px">Lượt tải thêm</th>
+                                    <th scope="col" style="width:150px">Ngày phát sinh</th>
+                                    <th scope="col" style="width:150px">Giá (VND)</th>
+                                    <th scope="col" style="width:150px">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int indexTransaction = 1;
+                                    foreach (var item in ListTransaction)
+                                    {
+                                        <tr>
+                                            <td scope="row">@indexTransaction</td>
+                                            <td>@item.amount</td>
+                                            <td>@item.createDate</td>
+                                            <td>@item.currentPrice</td>
+                                            <td>@Util.ListTransactionStatus.Where(w=>w.StatusValue == item.status).First().StatusName</td>
+                                        </tr>
+                                        indexTransaction++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div style="text-align:center">Hiện không có giao dịch nào được ghi nhận</div>
+                    }
+
+                </div>
+            </div>
+
+            <div class="twoButtonRegister">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
         </div>
     </div>
 

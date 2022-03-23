@@ -30,21 +30,30 @@ namespace TraCuuBMT.Controllers
             ViewBag.ListSubBieuThue = Util.GetListSubBieuThue(listBieuThue);
 
             //kết quả phân tích phân loại
-            ViewBag.ListKQPTPL = Util.GetListKTPTPL();
+            //ViewBag.ListKQPTPL = Util.GetListKTPTPL();
             if (!string.IsNullOrEmpty(hsCode))
             {
                 ViewBag.Keyword = hsCode;
             }
+
             if (!string.IsNullOrEmpty(mota))
             {
                 ViewBag.Keyword = mota;
             }
 
+            if (string.IsNullOrEmpty(mota) && string.IsNullOrEmpty(hsCode))
+            {
+                hsCode = "aaaaaaaaaaaaaaaaaaaa";//for empty result
+                mota = "aaaaaaaaaaaaaaaaaaaa";//for empty result
+
+            }
+            ViewBag.ListKQPTPL = Util.GetListKTPTPLBy(hsCode, mota);
+
             //search theo loại
             switch (type)
             {
                 case "1":
-                    ViewBag.ListThueVAT = Util.GetListThueVAT();
+                    ViewBag.ListThueVAT = Util.GetListThueVATByNameOrMoTa(mota);
                     List<BieuThue> listBieuThueType1 = Util.GetListBieuThueBy(hsCode, mota);
                     ViewBag.ListBieuThue = listBieuThueType1;
                     ViewBag.ListSubBieuThue = Util.GetListSubBieuThue(listBieuThueType1);
@@ -69,6 +78,8 @@ namespace TraCuuBMT.Controllers
         //    return View();
         //}
 
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -87,6 +98,8 @@ namespace TraCuuBMT.Controllers
         public ActionResult SendEmail(string itemId)
         {
             bool result = false;
+            string message = "";
+            string detailError = "";
             if (!Util.CheckAuthenAndAuthor(1))
             {
                 return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.ToString() });
@@ -110,16 +123,28 @@ namespace TraCuuBMT.Controllers
                         string fullpath = UploadPath + item.link_file_vn;
                         if (System.IO.File.Exists(fullpath))
                         {
-                            result = Util.SendEmail(toEmail, fromEMail, subject, body, password, fullpath);
+                            result = Util.SendEmail(toEmail, fromEMail, subject, body, password, fullpath, ref detailError);
                             if (result)
                             {
                                 Util.CreateTransactionByAmount(user.ID, -1);
+                                message = "Gửi file thành công";
                             }
+                            else
+                            {
+                                //gửi file thất bại, log của
+                                message = "Lỗi hệ thống, gửi file thất bại";
+                            }
+                        }
+                        else
+                        {
+                            //Không tìm thấy file
+                            message = "Gửi file thất bại, không tìm thấy file!";
                         }
                     }
                 }
                 else
                 {
+                    message = "Gửi file thất bại, không tìm thấy kết quả phân tích phân loại!";
                     //ko tìm thấy bieu thue
                 }
 
@@ -128,9 +153,11 @@ namespace TraCuuBMT.Controllers
             catch (Exception ex)
             {
                 result = false;
+                message = "Lỗi hệ thống, gửi file thất bại";
+                detailError = ex.ToString();
             }
 
-            return Json(new { result = result, JsonRequestBehavior.AllowGet }); ;
+            return Json(new { result, message, detailError, JsonRequestBehavior.AllowGet }); ;
         }
 
 
@@ -146,7 +173,7 @@ namespace TraCuuBMT.Controllers
             }
             try
             {
-                if(Util.GetCurrentUser().ID == userId)
+                if (Util.GetCurrentUser().ID == userId)
                 {
                     int resultCount = 0;
                     foreach (string packageId in listPackageId)
@@ -182,7 +209,7 @@ namespace TraCuuBMT.Controllers
                     message = "Có lỗi xảy ra! Vui lòng thử lại";
                     detailMessage = "Error session";
                 }
-                
+
             }
             catch (Exception ex)
             {

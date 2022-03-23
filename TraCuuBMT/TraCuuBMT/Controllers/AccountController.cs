@@ -143,7 +143,7 @@ namespace TraCuuBMT.Controllers
             using (var db = new TraCuuBMTEntities())
             {
                 string md5Password = Util.CreateMD5(txtPassword);
-                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.role == 1 && w.status > -1).FirstOrDefault();
+                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.role == 1 && w.status == 1).FirstOrDefault();
                 if (user != null)
                 {
                     Session["userInfo"] = user;
@@ -174,7 +174,7 @@ namespace TraCuuBMT.Controllers
             using (var db = new TraCuuBMTEntities())
             {
                 string md5Password = Util.CreateMD5(txtPassword);
-                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.status > -1 && w.role == 2).FirstOrDefault();
+                var user = db.Users.Where(w => w.phone == txtPhone && w.email == txtEmail && w.password == md5Password && w.status == 1 && w.role == 2).FirstOrDefault();
                 if (user != null)
                 {
                     Session["userInfo"] = user;
@@ -202,9 +202,6 @@ namespace TraCuuBMT.Controllers
             Session.Abandon();
             return RedirectToAction("LoginAdmin", "Account");
         }
-
-        
-
 
     }
 }

@@ -63,6 +63,78 @@
     </div>
 </div>
 
+@foreach (var item in listKQPTPL)
+{
+    string modalId = "contentKQPTPL" + item.ID;
+
+    string So_Vanban = item.So_Vanban;
+    if (So_Vanban.Length > 2)
+    {
+        int tempNum = So_Vanban.Length - 2;
+        So_Vanban = So_Vanban.Remove(2, tempNum).Insert(2, "*****");
+
+    }
+
+    string DonVi_XNK = item.DonVi_XNK;
+    int startindex = DonVi_XNK.Length / 2;
+    if (startindex > 0)
+    {
+        int endIndex = DonVi_XNK.Length - startindex;
+        DonVi_XNK = DonVi_XNK.Remove(startindex, endIndex).Insert(startindex, "*********");
+    }
+
+    string Co_Quan_YC_PTPL = item.Co_Quan_YC_PTPL;
+    int startindex2 = Co_Quan_YC_PTPL.Length / 2;
+    if (startindex2 > 0)
+    {
+        int endIndex2 = Co_Quan_YC_PTPL.Length - startindex2;
+        Co_Quan_YC_PTPL = Co_Quan_YC_PTPL.Remove(startindex2, endIndex2).Insert(startindex2, "*********");
+    }
+
+    <div class="modal fade modalContentKQPTPL" id="@modalId" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thông tin nội dung kết quả phân tích phân loại</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="itemId" id="itemId" readonly style="display:none;" value="@item.ID" />
+
+                    <div class="rowProfile">
+                        <div>Số VB PTPL: <span id="popup_soVBPTPL">@So_Vanban</span></div>
+                        <div>Nơi phát hành: <span>@item.CoQuan_PhatHanh_PTPL</span></div>
+                    </div>
+                    <div class="rowProfile">
+                        <div>Mô tả khai báo: <span>@item.Mota_Dnkhaibao</span></div>
+                    </div>
+                    <div class="rowProfile">
+                        <div>Mô tả KQPTPL: <span>@item.Mota_KQPTPL</span></div>
+                    </div>
+                    <div class="rowProfile">
+                        <div>HS Code phân loại theo KQPTPL: <span>@item.hsCode</span></div>
+                    </div>
+                    <div class="rowProfile">
+                        <div>Đơn vị XNK: <span>@DonVi_XNK</span></div>
+                    </div>
+
+                    <div class="rowProfile">
+                        <div>Đơn vị y/c PTPL: <span>@Co_Quan_YC_PTPL</span></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="sendEmail" class="btn btn-primary openConfirmSendEmail" data-id="@item.ID" data-toggle="modal" data-target="#confirmSendEmail">Gửi VB về email</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+
 <div class="searchArea">
     <input id="email" readonly style="display:none" value="@user.email" />
     <input id="type" readonly style="display:none" value="@ViewBag.type" />
@@ -117,175 +189,223 @@
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
             <h3>Biểu thuế - thuế suất</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">ĐVT/SL2</th>
-                        <th scope="col">Biểu thuế</th>
-                        <th scope="col">Thuế suất(%)</th>
-                        <th scope="col">Tên biểu thuế</th>
-                        <th scope="col">Ghi chú</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexSubBieuThue = 1;
-                        foreach (var item in listSubBieuThue)
-                        {
-                            <tr>
-                                <th scope="row">@indexSubBieuThue</th>
-                                <td>@item.HS_CODE</td>
-                                <td>@item.DVT_SL2</td>
-                                <td>@item.B_Title</td>
-                                <td>@item.B_Value</td>
-                                <td>@item.tenBieuThue</td>
-                                <td>@item.note</td>
-                            </tr>
-                            indexSubBieuThue++;
+            @if (listSubBieuThue.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">HS Code</th>
+                            <th scope="col">ĐVT/SL2</th>
+                            <th scope="col">Biểu thuế</th>
+                            <th scope="col">Thuế suất(%)</th>
+                            <th scope="col">Tên biểu thuế</th>
+                            <th scope="col">Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexSubBieuThue = 1;
+                            foreach (var item in listSubBieuThue)
+                            {
+                                <tr>
+                                    <th scope="row">@indexSubBieuThue</th>
+                                    <td>@item.HS_CODE</td>
+                                    <td>@item.DVT_SL2</td>
+                                    <td>@item.B_Title</td>
+                                    <td>@item.B_Value</td>
+                                    <td>@item.tenBieuThue</td>
+                                    <td>@item.note</td>
+                                </tr>
+                                indexSubBieuThue++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
         <div id="thueVAT" class="tab-pane fade">
             <h3>Thuế VAT</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col" style="width:70%;">Mô tả</th>
-                        <th scope="col">Dữ liệu</th>
-                        <th scope="col">Ghi chú</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexThueVAT = 1;
-                        foreach (var item in listThueVAT)
-                        {
-                            <tr>
-                                <th scope="row">@indexThueVAT</th>
-                                <td>@item.name</td>
-                                <td>@item.mota</td>
-                                <td>@item.value</td>
-                                <td>@item.note</td>
-                            </tr>
-                            indexThueVAT++;
+            @if (listThueVAT.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col" style="width:70%;">Mô tả</th>
+                            <th scope="col">Dữ liệu</th>
+                            <th scope="col">Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexThueVAT = 1;
+                            foreach (var item in listThueVAT)
+                            {
+                                <tr>
+                                    <th scope="row">@indexThueVAT</th>
+                                    <td>@item.name</td>
+                                    <td>@item.mota</td>
+                                    <td>@item.value</td>
+                                    <td>@item.note</td>
+                                </tr>
+                                indexThueVAT++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
         <div id="thueBVMT" class="tab-pane fade">
             <h3>Thuế bảo vệ môi trường</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">Thuế bảo vệ môi trường</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexThueBVMT = 1;
-                        foreach (var item in listBieuThue)
-                        {
-                            string isThue = item.THUE_BVMT > 0 ? "Có" : "Không";
-                            <tr>
-                                <th scope="row">@indexThueBVMT</th>
-                                <td>@item.HS_CODE</td>
-                                <td>@isThue</td>
-                            </tr>
-                            indexThueBVMT++;
+            @if (listBieuThue.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">HS Code</th>
+                            <th scope="col">Thuế bảo vệ môi trường</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexThueBVMT = 1;
+                            foreach (var item in listBieuThue)
+                            {
+                                string isThue = item.THUE_BVMT > 0 ? "Có" : "Không";
+                                <tr>
+                                    <th scope="row">@indexThueBVMT</th>
+                                    <td>@item.HS_CODE</td>
+                                    <td>@isThue</td>
+                                </tr>
+                                indexThueBVMT++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
         <div id="thueTTDB" class="tab-pane fade">
             <h3>Thuế tiêu thụ đặc biệt</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">Thuế tiêu thụ đặc biệt</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexThueTTDB = 1;
-                        foreach (var item in listBieuThue)
-                        {
-                            string isThue = item.THUE_TTDB > 0 ? "Có" : "Không";
-                            <tr>
-                                <th scope="row">@indexThueTTDB</th>
-                                <td>@item.HS_CODE</td>
-                                <td>@isThue</td>
-                            </tr>
-                            indexThueTTDB++;
+            @if (listBieuThue.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">HS Code</th>
+                            <th scope="col">Thuế tiêu thụ đặc biệt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexThueTTDB = 1;
+                            foreach (var item in listBieuThue)
+                            {
+                                string isThue = item.THUE_TTDB > 0 ? "Có" : "Không";
+                                <tr>
+                                    <th scope="row">@indexThueTTDB</th>
+                                    <td>@item.HS_CODE</td>
+                                    <td>@isThue</td>
+                                </tr>
+                                indexThueTTDB++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
         <div id="thueTVCBPG" class="tab-pane fade">
             <h3>Thuế TV - CBPG</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">Thuế TV - CBPG</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexThueTVCBPG = 1;
-                        foreach (var item in listBieuThue)
-                        {
-                            string isThue = item.THUE_TVCBPG > 0 ? "Có" : "Không";
-                            <tr>
-                                <th scope="row">@indexThueTVCBPG</th>
-                                <td>@item.HS_CODE</td>
-                                <td>@isThue</td>
-                            </tr>
-                            indexThueTVCBPG++;
+            @if (listBieuThue.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">HS Code</th>
+                            <th scope="col">Thuế TV - CBPG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexThueTVCBPG = 1;
+                            foreach (var item in listBieuThue)
+                            {
+                                string isThue = item.THUE_TVCBPG > 0 ? "Có" : "Không";
+                                <tr>
+                                    <th scope="row">@indexThueTVCBPG</th>
+                                    <td>@item.HS_CODE</td>
+                                    <td>@isThue</td>
+                                </tr>
+                                indexThueTVCBPG++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
         <div id="thuePBDX" class="tab-pane fade">
             <h3>Thuế PBĐX</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">Thuế PBĐX</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexThuePBDX = 1;
-                        foreach (var item in listBieuThue)
-                        {
-                            string isThue = item.THUE_PBDX > 0 ? "Có" : "Không";
-                            <tr>
-                                <th scope="row">@indexThuePBDX</th>
-                                <td>@item.HS_CODE</td>
-                                <td>@isThue</td>
-                            </tr>
-                            indexThuePBDX++;
+            @if (listBieuThue.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">HS Code</th>
+                            <th scope="col">Thuế PBĐX</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexThuePBDX = 1;
+                            foreach (var item in listBieuThue)
+                            {
+                                string isThue = item.THUE_PBDX > 0 ? "Có" : "Không";
+                                <tr>
+                                    <th scope="row">@indexThuePBDX</th>
+                                    <td>@item.HS_CODE</td>
+                                    <td>@isThue</td>
+                                </tr>
+                                indexThuePBDX++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
     </div>
 </div>
@@ -300,37 +420,47 @@
     <div class="tab-content">
         <div id="ketQuaPhanTichPhanLoai" class="tab-pane fade in active">
             <h3>Kết quả phân tích phân loại</h3>
-            <table class="table table-bordered BieuThueTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">HS Code</th>
-                        <th scope="col">Mô tả</th>
-                        <th scope="col">ĐVT-BT</th>
-                        <th scope="col">Thuế suất</th>
-                        <th scope="col">Nội dung KQ-PTPL</th>
-                        <th scope="col">File Văn bản</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        int indexKQPTPL = 1;
-                        foreach (var item in listKQPTPL)
-                        {
-                            <tr>
-                                <th scope="row">@indexKQPTPL</th>
-                                <td>@item.hsCode</td>
-                                <td>@item.description</td>
-                                <td>@item.unit</td>
-                                <td>Chi tiết</td>
-                                <td><a href="">Xem nội dung</a></td>
-                                <td><div style="cursor:pointer" class="openConfirmSendEmail" data-id="@item.ID" data-toggle="modal" data-target="#confirmSendEmail">Gửi văn bản về email</div></td>
-                            </tr>
-                            indexKQPTPL++;
+            @if (listKQPTPL.Count > 0)
+            {
+                <table class="table table-bordered BieuThueTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">HS Code</th>
+                            <th scope="col">Mô tả</th>
+                            <th scope="col">ĐVT-BT</th>
+                            <th scope="col">Thuế suất</th>
+                            <th scope="col">Nội dung KQ-PTPL</th>
+                            <th scope="col">File Văn bản</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int indexKQPTPL = 1;
+                            foreach (var item in listKQPTPL)
+                            {
+                                string modalId = "#contentKQPTPL" + item.ID;
+                                <tr>
+                                    <th scope="row">@indexKQPTPL</th>
+                                    <td>@item.hsCode</td>
+                                    <td>@item.description</td>
+                                    <td>@item.unit</td>
+                                    <td>Chi tiết</td>
+                                    @*<td><a href="">Xem nội dung</a></td>*@
+                                    <td><div style="cursor:pointer" class="openContentKQPTPL" data-id="@item.ID" data-toggle="modal" data-target="@modalId">Xem nội dung</div></td>
+                                    <td><div style="cursor:pointer" class="openConfirmSendEmail" data-id="@item.ID" data-toggle="modal" data-target="#confirmSendEmail">Gửi văn bản về email</div></td>
+                                </tr>
+                                indexKQPTPL++;
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align:center">Hiện không có kết quả, vui lòng nhập từ khóa tìm kiếm hoặc thử từ khóa tìm kiếm khác</div>
+            }
+
         </div>
     </div>
 </div>
@@ -353,6 +483,13 @@
         $(document).on("click", ".openConfirmSendEmail", function () {
             var itemId = $(this).data('id');
             $(".modal-body #itemId").val(itemId);
+            $('.modalContentKQPTPL').modal('hide');
+        });
+
+        $(document).on("click", ".openContentKQPTPL", function () {
+            var itemId = $(this).data('id');
+            $(".modal-body #itemId").val(itemId);
+
             // As pointed out in comments,
             // it is unnecessary to have to manually call the modal.
             // $('#addBookDialog').modal('show');
@@ -386,7 +523,6 @@
 
         $("#sendEmail").click(function () {
             var itemId = $("#itemId").val();
-            var email = $("#email").val();
             $.ajax({
             url: '@Url.Action("SendEmail", "Home")',
             dataType: "json",
@@ -396,6 +532,8 @@
             success: function (data) {
                 if (data.result) {
                     alert("Gửi Email thành công! Vui lòng check email");
+                } else {
+                    alert(data.message);
                 }
             },
             error: function (xhr) {

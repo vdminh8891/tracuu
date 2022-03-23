@@ -290,6 +290,7 @@
     <Content Include="Views\Admin\EditAdminUser.cshtml" />
     <Content Include="Views\Admin\EditKQPTPL.cshtml" />
     <Content Include="Views\Home\RegisterMore.cshtml" />
+    <Content Include="Views\Admin\EditPackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
